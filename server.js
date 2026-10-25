@@ -18,7 +18,10 @@ wss.on("connection",ws=>{
     if(m.t==="join"&&!code){
       const c=String(m.room||"").toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,12);
       if(!c){ws.close();return}
-      let r=rooms.get(c);if(!r){r=new Map();rooms.set(c,r)}
+      let r=rooms.get(c);
+      if(m.mode==="create"&&r){ws.send(JSON.stringify({t:"exists"}));ws.close();return}
+      if(m.mode==="join"&&!r){ws.send(JSON.stringify({t:"none"}));ws.close();return}
+      if(!r){r=new Map();rooms.set(c,r)}
       if(r.size>=2){ws.send(JSON.stringify({t:"full"}));ws.close();return}
       code=c;r.set(ws,{id:++n,p:{}});snap(code);
     }else if(m.t==="p"&&code){
