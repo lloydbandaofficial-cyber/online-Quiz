@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quiz Challenge</title>
+<style>
+:root{--pu:#5b50d6;--pu2:#7a70e8;--bg:#5b50d6;--sheet:#fff;--fg:#1b1a2e;--mut:#7a7890;--bd:#e4e2f3;--ink:#12112a;--bad:#e5484d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2f2a82;--sheet:#1c1b33;--fg:#f1f0fb;--mut:#a5a3c4;--bd:#34325a;--ink:#0d0c20;--pu:#7468f0}}
+:root[data-theme="dark"]{--bg:#2f2a82;--sheet:#1c1b33;--fg:#f1f0fb;--mut:#a5a3c4;--bd:#34325a;--ink:#0d0c20;--pu:#7468f0}
+*{box-sizing:border-box}html{background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:#fff;font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:430px;margin:0 auto}.hide{display:none}
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 10px}
+.top small{opacity:.8;font-size:12px;letter-spacing:.06em}.top h1{margin:2px 0 0;font-size:22px}
+.av{width:44px;height:44px;border-radius:50%;background:#463cc0;color:#fff;display:grid;place-items:center;font-weight:700}
+.av.sm{width:38px;height:38px;background:var(--pu)}
+.sheet{background:var(--sheet);color:var(--fg);border-radius:28px 28px 0 0;padding:20px;margin-top:12px;min-height:68vh}
+.feat{background:linear-gradient(160deg,var(--pu2),var(--pu));color:#fff;border-radius:22px;padding:18px}
+.feat small{opacity:.85;letter-spacing:.06em}.feat h2{margin:6px 0;font-size:19px}.feat p{margin:0 0 8px;opacity:.9}
+.feat input{width:100%;padding:12px;border-radius:12px;border:0;margin:5px 0;font:inherit;color:#1b1a2e;background:#fff}
+.pill{width:100%;background:#fff;color:#463cc0;border:0;border-radius:999px;padding:13px;font:inherit;font-weight:700;margin-top:8px;cursor:pointer}
+h3{margin:22px 0 4px;font-size:18px}
+.li{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--bd);border-radius:14px;margin:10px 0;width:100%;background:none;color:var(--fg);font:inherit;text-align:left}
+button.li{cursor:pointer}.li small{display:block;color:var(--mut)}.ic{width:40px;height:40px;border-radius:10px;background:var(--pu);color:#fff;display:grid;place-items:center}
+.top2{display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
+.back{background:none;border:0;color:#fff;font-size:24px;width:32px;cursor:pointer}
+.chips{display:flex;align-items:center;gap:10px;padding:0 16px}
+.chip{background:rgba(255,255,255,.18);border-radius:10px;padding:6px 10px;font-size:14px;white-space:nowrap}
+.pbar{flex:1;height:6px;background:rgba(255,255,255,.25);border-radius:3px;overflow:hidden}.pbar i{display:block;height:100%;width:0;background:#fff;transition:width .4s}
+.tm{width:60px;height:60px;border-radius:50%;background:conic-gradient(var(--pu) calc(var(--p)*1%),var(--bd) 0);display:grid;place-items:center;margin:0 auto}
+.tm span{width:48px;height:48px;border-radius:50%;background:var(--sheet);display:grid;place-items:center;font-weight:700;color:var(--pu);font-size:18px}
+.qn{color:var(--mut);font-size:12px;letter-spacing:.05em;text-transform:uppercase;margin:18px 0 6px}
+.qt{font-size:19px;font-weight:700;margin-bottom:12px}
+.o{display:block;width:100%;text-align:left;padding:15px 16px;margin:10px 0;border:1px solid var(--bd);border-radius:12px;background:var(--sheet);color:var(--fg);font:inherit;cursor:pointer}
+.o.ok{background:var(--pu);color:#fff;border-color:var(--pu)}.o.no{background:var(--bad);color:#fff;border-color:var(--bad)}
+.nx{background:var(--ink);color:#fff;border-radius:14px;padding:16px;text-align:center;font-weight:600;margin-top:18px}
+.wait{text-align:center;padding-top:30px}.wait p{color:var(--mut)}.code{font-size:34px;font-weight:800;letter-spacing:.15em;color:var(--pu)}
+.lr{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:rgba(122,112,232,.12);margin:10px 0}
+.ln{flex:1}.ln small{display:block;color:var(--mut)}.rk{width:22px;color:var(--mut);font-weight:700}
+.cg{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 8px}.cc{border:1px solid var(--bd);background:none;color:var(--fg);border-radius:999px;padding:8px 14px;font:inherit;cursor:pointer}.cc.on{background:var(--pu);color:#fff;border-color:var(--pu)}#cw small{color:var(--mut)}
+</style></head><body><main>
+<section id="home">
+ <header class="top"><div><small>WELCOME</small><h1 id="hi">Quiz Challenge</h1></div><div class="av" id="av">Q</div></header>
+ <div class="sheet">
+  <div class="feat"><small>FEATURED</small><h2>Take part in challenges with a friend</h2><p>Type the same room code on both phones.</p>
+   <input id="nm" placeholder="Your name" maxlength="16">
+   <input id="cd" placeholder="Room code (e.g. LILO)" maxlength="12" autocapitalize="characters">
+   <button class="pill" id="go">Find friends · Play online</button></div>
+  <h3>Quizzes</h3>
+  <button class="li" id="solo"><span class="ic">▶</span><span><b>Practice alone</b><small>10 random questions</small></span></button>
+  <button class="li" id="catb"><span class="ic">★</span><span><b>Choose categories</b><small id="cs"></small></span></button>
+  <div id="cw" class="hide"><div class="cg" id="cats"></div><small>With a friend, the categories of whoever joins the room first are used.</small></div>
+ </div>
+</section>
+<section id="game" class="hide">
+ <header class="top2"><button class="back" onclick="location.reload()">←</button><b>Quiz Challenge</b><span style="width:32px"></span></header>
+ <div class="chips"><span class="chip" id="me">You 0</span><div class="pbar"><i id="pg"></i></div><span class="chip" id="fr"></span></div>
+ <div class="sheet" id="qa"></div>
+</section>
+<script>
+const Q=[
+["General Knowledge","Which planet is known as the Red Planet?",["Venus","Mars","Jupiter","Saturn"],1],
+["General Knowledge","What is the largest ocean on Earth?",["Atlantic","Indian","Arctic","Pacific"],3],
+["General Knowledge","What is the chemical symbol for gold?",["Ag","Go","Au","Gd"],2],
+["General Knowledge","What is the smallest prime number?",["0","1","2","3"],2],
+["General Knowledge","Which gas do plants absorb during photosynthesis?",["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],2],
+["Malawi","What is the capital city of Malawi?",["Blantyre","Lilongwe","Mzuzu","Zomba"],1],
+["Malawi","What is Malawi’s currency?",["Rand","Shilling","Kwacha","Pula"],2],
+["Malawi","In which year did Malawi gain independence?",["1957","1960","1964","1966"],2],
+["Malawi","Who was Malawi’s first president?",["Hastings Kamuzu Banda","Bakili Muluzi","Bingu wa Mutharika","Joyce Banda"],0],
+["Malawi","What was Malawi called under British colonial rule?",["Tanganyika","Bechuanaland","Northern Rhodesia","Nyasaland"],3],
+["African History","Nelson Mandela was president of which country?",["Kenya","Nigeria","South Africa","Ghana"],2],
+["African History","Which country was formerly known as the Gold Coast?",["Senegal","Uganda","Ghana","Zambia"],2],
+["African History","Where is the African Union headquartered?",["Nairobi","Addis Ababa","Cairo","Johannesburg"],1],
+["African History","Mansa Musa ruled which empire?",["Roman Empire","Mali Empire","Ottoman Empire","Zulu Kingdom"],1],
+["African History","Timbuktu is a historic city in which country?",["Mali","Ethiopia","Malawi","Morocco"],0],
+["Geography","What is the capital of Japan?",["Kyoto","Osaka","Hiroshima","Tokyo"],3],
+["Geography","Which is the largest country by area?",["China","Canada","Russia","United States"],2],
+["Geography","Which river flows through Egypt?",["Congo","Nile","Niger","Zambezi"],1],
+["Geography","What is the capital of Australia?",["Sydney","Canberra","Melbourne","Perth"],1],
+["Geography","Victoria Falls lies on the border of which two countries?",["Malawi and Tanzania","Kenya and Uganda","Zambia and Zimbabwe","Egypt and Sudan"],2],
+["Animals","What is the largest land animal?",["African elephant","Rhino","Hippopotamus","Giraffe"],0],
+["Animals","Which is the fastest land animal?",["Lion","Leopard","Cheetah","Ostrich"],2],
+["Animals","What do pandas mainly eat?",["Fish","Meat","Grasshoppers","Bamboo"],3],
+["Animals","What is a group of lions called?",["Herd","Pack","Pride","Flock"],2],
+["Animals","What is a young frog in its aquatic stage called?",["Calf","Tadpole","Cub","Chick"],1],
+["Music","Who is known as the King of Pop?",["Elvis Presley","Michael Jackson","Bruno Mars","Stevie Wonder"],1],
+["Music","Which Nigerian musician pioneered Afrobeat?",["Burna Boy","Wizkid","Fela Kuti","Davido"],2],
+["Music","How many strings does a standard violin have?",["4","3","5","6"],0],
+["Music","Which South African singer was called “Mama Africa”?",["Brenda Fassie","Yvonne Chaka Chaka","Letta Mbulu","Miriam Makeba"],3],
+["Music","Who sang the 2015 hit “Hello”?",["Adele","Rihanna","Beyoncé","Shakira"],0],
+["Art and Culture","Who painted the Mona Lisa?",["Picasso","Leonardo da Vinci","Van Gogh","Monet"],1],
+["Art and Culture","Who painted The Starry Night?",["Dalí","Rembrandt","Vincent van Gogh","Michelangelo"],2],
+["Art and Culture","Which are the primary colours in basic paint mixing?",["Green, orange, purple","Red, yellow, blue","Black, white, grey","Pink, brown, gold"],1],
+["Art and Culture","Kente cloth is especially associated with which country?",["Iceland","Peru","Ghana","Mongolia"],2],
+["Art and Culture","Which country is famous for origami?",["Brazil","Japan","Egypt","Canada"],1],
+["Sports","How many players per team are on the pitch in football?",["11","10","9","12"],0],
+["Sports","How many rings are on the Olympic symbol?",["4","5","6","7"],1],
+["Sports","Who won the 2022 men’s FIFA World Cup?",["France","Brazil","Argentina","Croatia"],2],
+["Sports","Which sport is played at Wimbledon?",["Tennis","Cricket","Golf","Athletics"],0],
+["Sports","What colour card sends a footballer off?",["Blue","Green","White","Red"],3],
+["Science and Tech","What is the closest star to Earth?",["Sirius","The Sun","Polaris","Alpha Centauri"],1],
+["Science and Tech","What does CPU stand for?",["Central Processing Unit","Computer Power Utility","Central Program User","Control Processing Upload"],0],
+["Science and Tech","At sea level, water boils at about…",["50°C","75°C","100°C","150°C"],2],
+["Science and Tech","What is the chemical formula for water?",["CO₂","H₂O","O₂","NaCl"],1],
+["Science and Tech","Which planet is famous for its rings?",["Mercury","Venus","Saturn","Mars"],2],
+["International","Where is the United Nations headquarters?",["Geneva","New York City","Paris","London"],1],
+["International","What is the currency of Japan?",["Yuan","Won","Yen","Baht"],2],
+["International","Which country gifted the Statue of Liberty to the USA?",["Germany","France","Italy","Canada"],1],
+["International","Machu Picchu is in which country?",["Peru","Chile","Bolivia","Ecuador"],0],
+["International","What is the official language of Brazil?",["Spanish","French","Portuguese","Italian"],2]
+];
+const C={g:"General Knowledge",m:"Malawi",h:"African History",e:"Geography",a:"Animals",s:"Music",r:"Art and Culture",p:"Sports",t:"Science and Tech",i:"International"};
+[
+["g","How many days are in a leap year?",["364","365","366","367"],2],
+["g","How many sides does a hexagon have?",["5","7","8","6"],3],
+["g","Which organ pumps blood around the body?",["Heart","Liver","Brain","Lungs"],0],
+["g","Who wrote Romeo and Juliet?",["Charles Dickens","Mark Twain","William Shakespeare","Jane Austen"],2],
+["g","How many continents are commonly recognized?",["5","6","7","8"],2],
+["g","What is the hardest naturally occurring mineral?",["Quartz","Diamond","Granite","Iron"],1],
+["g","How many minutes are in three hours?",["120","150","180","210"],2],
+["g","Which instrument measures temperature?",["Barometer","Compass","Stopwatch","Thermometer"],3],
+["g","What is the square root of 144?",["12","10","11","14"],0],
+["g","Which blood cells mainly carry oxygen?",["White blood cells","Red blood cells","Platelets","Plasma"],1],
+["m","What is the name of Malawi’s famous lake?",["Lake Chad","Lake Malawi","Lake Albert","Lake Turkana"],1],
+["m","Which country borders Malawi to the east and south?",["Angola","Ghana","Rwanda","Mozambique"],3],
+["m","What is the national language of Malawi?",["Chichewa","Zulu","Arabic","Portuguese"],0],
+["m","Which city is often called Malawi’s commercial capital?",["Blantyre","Karonga","Dedza","Salima"],0],
+["m","What is the highest mountain in Malawi?",["Mount Kilimanjaro","Mount Kenya","Sapitwa Peak (Mulanje)","Nyika Peak"],2],
+["m","Which region of Malawi contains Mzuzu?",["Southern","Central","Northern","Eastern"],2],
+["m","Which large African lake lies along Malawi’s eastern side?",["Lake Victoria","Lake Malawi","Lake Chad","Lake Kivu"],1],
+["m","Which lake is famous for colourful cichlid fish?",["Lake Chad","Lake Turkana","Lake Natron","Lake Malawi"],3],
+["m","Which country lies north of Malawi?",["Zambia","Tanzania","Botswana","Lesotho"],1],
+["m","What is the name of Malawi’s national football team?",["The Warriors","The Leopards","The Zebras","The Flames"],3],
+["h","Which ancient civilization built the pyramids at Giza?",["Roman","Greek","Egyptian","Persian"],2],
+["h","Apartheid was a system of racial segregation in which country?",["Egypt","South Africa","Ghana","Tanzania"],1],
+["h","Which country is associated with the ancient Kingdom of Aksum?",["Namibia","Ethiopia","Liberia","Gabon"],1],
+["h","Swahili is widely spoken in which part of Africa?",["West Africa","North Africa","East Africa","Southern Europe"],2],
+["h","Great Zimbabwe is an archaeological site in which country?",["Sudan","Tunisia","Chad","Zimbabwe"],3],
+["h","Which African country became independent from Britain in 1957?",["Malawi","Botswana","Ghana","Lesotho"],2],
+["h","The Maasai people are especially associated with which countries?",["Morocco and Algeria","Kenya and Tanzania","Mali and Niger","Angola and Namibia"],1],
+["h","Which civilization developed around the ancient city of Carthage?",["Aztec","Chinese","Inca","Phoenician"],3],
+["h","Which Nigerian ethnic group is associated with the Yoruba language?",["Maasai","Berber","Shona","Yoruba"],3],
+["h","What was the main purpose of the Great Zimbabwe stone complex?",["A modern airport","A railway station","A royal and political centre","A naval base"],2],
+["e","What is the capital of France?",["Paris","Rome","Madrid","Lisbon"],0],
+["e","On which continent is Brazil?",["Africa","Europe","South America","Asia"],2],
+["e","Which desert covers much of North Africa?",["Gobi","Kalahari","Atacama","Sahara"],3],
+["e","What is the capital of Kenya?",["Kampala","Kigali","Nairobi","Dodoma"],2],
+["e","Mount Everest is part of which mountain range?",["Alps","Andes","Rockies","Himalayas"],3],
+["e","Which country is famous for the ancient city of Petra?",["Jordan","Lebanon","Iraq","Oman"],0],
+["e","Which ocean lies between Africa and Australia?",["Atlantic","Arctic","Southern","Indian"],3],
+["e","Which country is shaped like a boot on a map?",["Greece","Italy","Norway","Chile"],1],
+["e","Which is the world’s largest hot desert?",["Arabian","Sahara","Kalahari","Mojave"],1],
+["e","In which country is the Great Barrier Reef?",["South Africa","Mexico","India","Australia"],3],
+["a","Which mammal can fly using powered flight?",["Flying squirrel","Lemur","Bat","Sugar glider"],2],
+["a","Which bird is famous for mimicking human speech?",["Penguin","Parrot","Flamingo","Eagle"],1],
+["a","What is the tallest living land animal?",["Camel","Ostrich","Elephant","Giraffe"],3],
+["a","Which animal has black-and-white stripes?",["Hyena","Warthog","Zebra","Baboon"],2],
+["a","What is the largest animal known to have ever lived?",["Blue whale","African elephant","Whale shark","Giant squid"],0],
+["a","Which animal changes colour to blend into its surroundings?",["Crocodile","Chameleon","Meerkat","Gazelle"],1],
+["a","Which insect produces honey?",["Ant","Butterfly","Dragonfly","Honeybee"],3],
+["a","Which animal carries its baby in a pouch?",["Zebra","Tiger","Kangaroo","Wolf"],2],
+["a","Which reptile has a hard shell and can retract its head?",["Cobra","Tortoise","Gecko","Iguana"],1],
+["a","Which African animal has a powerful bite and spends much time in water?",["Hippopotamus","Impala","Cheetah","Meerkat"],0],
+["s","Which instrument has black and white keys?",["Violin","Trumpet","Drum","Piano"],3],
+["s","Which Jamaican musician helped popularize reggae worldwide?",["Fela Kuti","Bob Marley","Youssou N’Dour","Hugh Masekela"],1],
+["s","Which instrument is associated with the West African kora tradition?",["Bagpipes","Harp guitar","Kora","Accordion"],2],
+["s","Which music genre originated in Jamaica?",["Flamenco","Tango","Polka","Reggae"],3],
+["s","Which instrument is played by hammers striking strings inside?",["Flute","Clarinet","Piano","Saxophone"],2],
+["s","What does a conductor lead in an orchestra?",["Musicians","A dance class","A football team","A choir audience"],0],
+["s","Which instrument belongs to the brass family?",["Violin","Harp","Trumpet","Cello"],2],
+["s","Which artist is associated with the album Thriller?",["Prince","Michael Jackson","Lionel Richie","George Michael"],1],
+["s","Which is the highest common female singing voice?",["Alto","Tenor","Bass","Soprano"],3],
+["s","Which genre is closely associated with improvisation and swing?",["Opera","Jazz","Marching music","Gregorian chant"],1],
+["r","What tool is commonly used to apply paint to a canvas?",["Chisel","Compass","Saw","Paintbrush"],3],
+["r","Which art movement is associated with Pablo Picasso?",["Baroque","Romanticism","Cubism","Impressionism"],2],
+["r","A sculpture is usually made by…",["Singing a melody","Shaping or carving material","Writing a poem","Measuring temperature"],1],
+["r","What is a person who creates pottery called?",["Composer","Architect","Potter","Novelist"],2],
+["r","Which famous building in India was built as a mausoleum?",["Colosseum","Eiffel Tower","Big Ben","Taj Mahal"],3],
+["r","What is calligraphy?",["Decorative handwriting","Stone carving","Film editing","Dance choreography"],0],
+["r","Which artist is known for the sculpture David?",["Andy Warhol","Banksy","Michelangelo","Henri Matisse"],2],
+["r","Which country is associated with the traditional tea ceremony?",["Spain","Mexico","Nigeria","Japan"],3],
+["r","What is a mural?",["A musical instrument","A large artwork painted on a wall","A small poem","A type of dance"],1],
+["r","Which art form uses the body to express ideas through movement?",["Pottery","Photography","Dance","Engraving"],2],
+["p","Which sport uses a racket and a shuttlecock?",["Tennis","Squash","Table tennis","Badminton"],3],
+["p","In which sport would you perform a slam dunk?",["Volleyball","Rugby","Basketball","Hockey"],2],
+["p","Which athlete is famous for sprinting and holding multiple world records?",["Roger Federer","Eliud Kipchoge","Usain Bolt","Michael Phelps"],2],
+["p","How many points is a free throw worth in basketball?",["2","1","3","4"],1],
+["p","Which is the international governing body for football?",["FIBA","ICC","World Athletics","FIFA"],3],
+["p","Which sport uses the terms “strike” and “spare”?",["Bowling","Boxing","Swimming","Cycling"],0],
+["p","How many players per team are on court in indoor volleyball?",["5","7","6","8"],2],
+["p","Which country hosted the 2010 FIFA World Cup?",["South Africa","Nigeria","Egypt","Morocco"],0],
+["p","Which Kenyan athlete won the men’s marathon at the 2016 and 2020 Olympics?",["David Rudisha","Eliud Kipchoge","Faith Kipyegon","Julius Yego"],1],
+["p","In cricket, how many runs for a ball that bounces and reaches the boundary?",["2","3","6","4"],3],
+["t","Which force keeps planets in orbit around the Sun?",["Friction","Magnetism","Electricity","Gravity"],3],
+["t","What does WWW stand for?",["Web World Wire","World Wide Web","Wide Wireless Window","World Web Work"],1],
+["t","Which part of a computer mainly displays visual output?",["Keyboard","Microphone","Mouse","Monitor"],3],
+["t","What is the basic unit of life?",["Atom","Cell","Organ","Tissue"],1],
+["t","What does GPS help determine?",["Blood type","Location","Food calories","Battery temperature"],1],
+["t","Which gas makes up most of Earth’s atmosphere?",["Nitrogen","Oxygen","Carbon dioxide","Hydrogen"],0],
+["t","What is the main function of a solar panel?",["Create rainfall","Store drinking water","Convert sunlight into electricity","Produce petrol"],2],
+["t","What does AI stand for?",["Automated Internet","Advanced Input","Artificial Intelligence","Active Information"],2],
+["t","Which device measures electric current?",["Thermometer","Ammeter","Barometer","Hygrometer"],1],
+["t","Which technology lets devices communicate wirelessly over short distances using radio waves?",["HDMI","Ethernet cable","USB cable","Bluetooth"],3],
+["i","Which country is famous for the Carnival in Rio de Janeiro?",["Portugal","Spain","Argentina","Brazil"],3],
+["i","Which organisation awards the Nobel Peace Prize?",["FIFA","Norwegian Nobel Committee","UNESCO alone","World Bank"],1],
+["i","Which city is known as the “Big Apple”?",["Los Angeles","New York City","Chicago","Miami"],1],
+["i","What is the main currency of many European Union countries?",["Pound","Franc","Euro","Dollar"],2],
+["i","Which international organisation focuses on global public health?",["WHO","FIFA","WTO","OPEC"],0],
+["i","What is the international climate agreement adopted in 2015?",["Geneva Treaty","Kyoto Charter","Rome Convention","Paris Agreement"],3],
+["i","Which country is home to the city of Istanbul?",["Greece","Türkiye (Turkey)","Egypt","Bulgaria"],1],
+["i","Which organisation maintains international civil aviation standards?",["FIFA","IMF","ICAO","IOC"],2],
+["i","Which country is known for the ancient Great Wall?",["India","China","Japan","Mongolia"],1],
+["i","Which organisation coordinates international postal services?",["International Olympic Committee","Universal Postal Union","World Trade Organization","International Labour Organization"],1]
+].forEach(x=>Q.push([C[x[0]],x[1],x[2],x[3]]));
+const $=id=>document.getElementById(id),N=10,T=15;
+const CATS=Object.values(C);let sel=CATS.slice();const myT=Date.now();
+let rm=null,order=[],r=0,score=0,left=T,tm=null,code="",name="",started=false,pending=0,locked=false;
+function rng(s){let h=1779033703^s.length;for(let i=0;i<s.length;i++){h=Math.imul(h^s.charCodeAt(i),3432918353);h=h<<13|h>>>19}let a=h>>>0;return()=>{a+=0x6D2B79F5;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
+function pick(seed,mask){const f=rng(seed+mask.join("|")),a=Q.map((_,i)=>i).filter(i=>mask.includes(Q[i][0]));for(let i=a.length-1;i>0;i--){const j=Math.floor(f()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a.slice(0,N)}
+const friend=()=>rm?rm.peers().find(p=>!p.isMe):null;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fname=f=>String(f.presence.name||"Friend").slice(0,16);
+function board(){
+ $("me").textContent="You "+score;
+ const f=friend();
+ $("fr").style.display=rm?"":"none";
+ $("fr").textContent=f?fname(f)+" "+(f.presence.score||0):"Friend –";
+ $("pg").style.width=(started?r/N*100:0)+"%";
+}
+function sync(extra){if(rm)rm.presence(Object.assign({name:name,score:score,t:myT,cats:sel.join("|")},extra||{})).catch(()=>{})}
+function show(){
+ const q=Q[order[r]];locked=false;left=T;
+ $("qa").innerHTML='<div class="tm" id="tm" style="--p:100"><span id="tn">'+T+'</span></div><div class="qn">Question '+(r+1)+' of '+N+' · '+q[0]+'</div><div class="qt">'+q[1]+'</div><div id="ops"></div><div class="nx" id="st">Pick an answer</div>';
+ q[2].forEach((o,i)=>{const b=document.createElement("button");b.className="o";b.textContent="ABCD"[i]+". "+o;b.onclick=()=>choose(i);$("ops").appendChild(b)});
+ clearInterval(tm);tm=setInterval(()=>{left--;$("tn").textContent=Math.max(left,0);$("tm").style.setProperty("--p",left/T*100);if(left<=0)choose(-1)},1000);
+ board();
+}
+function choose(i){
+ if(locked)return;locked=true;clearInterval(tm);
+ const q=Q[order[r]];
+ document.querySelectorAll(".o").forEach((b,k)=>{b.disabled=true;if(k===q[3])b.classList.add("ok");else if(k===i)b.classList.add("no")});
+ if(i===q[3]){const pts=100+left*3;score+=pts;$("st").textContent="Correct! +"+pts}else $("st").textContent=i<0?"Time’s up!":"Not quite.";
+ sync();board();
+ setTimeout(()=>{pending=r+1;sync({done:pending});advance()},1800);
+}
+function advance(){
+ if(!pending)return;
+ const f=friend();
+ if(rm&&f&&(f.presence.done||0)<pending){$("st").textContent="Waiting for your friend…";return}
+ const p=pending;pending=0;
+ if(p>=N)return end();
+ r=p;show();
+}
+function end(){
+ const f=friend(),rows=[{n:String(name).slice(0,16),s:score,me:1}];
+ if(f)rows.push({n:fname(f),s:f.presence.score||0});
+ rows.sort((a,b)=>b.s-a.s);
+ const tie=rows.length>1&&rows[0].s===rows[1].s;
+ const top=tie?"It’s a tie!":rows.length===1?"Nice game!":rows[0].me?"You win! 🎉":rows[0].n+" wins!";
+ $("qa").innerHTML='<div class="qt" style="text-align:center">'+esc(top)+'</div><h3 style="margin-top:6px">Leaderboard</h3>'+rows.map((x,i)=>'<div class="lr"><span class="rk">'+(i+1)+'</span><span class="av sm">'+esc((x.n[0]||"?").toUpperCase())+'</span><span class="ln"><b>'+esc(x.n)+(x.me?" (you)":"")+'</b><small>'+x.s+' points</small></span>'+(i===0&&!tie?"<span>👑</span>":"")+'</div>').join("")+'<div class="nx" style="cursor:pointer" onclick="location.reload()">Play again</div>';
+ $("pg").style.width="100%";board();
+}
+function begin(){
+ if(started)return;started=true;
+ let m=sel.slice();const f=friend();
+ if(rm&&f&&f.presence.cats){const ft=f.presence.t||0,fc=String(f.presence.cats);if(ft<myT||(ft===myT&&fc<m.join("|")))m=fc.split("|")}
+ m=m.filter(x=>CATS.includes(x));if(!m.length)m=CATS.slice();
+ order=pick(code||String(Date.now()),m);r=0;score=0;sync({done:0});show();
+}
+function joinRoom(code){
+ return new Promise((res,rej)=>{
+  const ws=new WebSocket((location.protocol==="https:"?"wss://":"ws://")+location.host);
+  let peers=[],hs=[],ok=false;
+  const rm={peers:()=>peers,presence:p=>{if(ws.readyState===1)ws.send(JSON.stringify({t:"p",p:p}));return Promise.resolve()},onPeers:h=>hs.push(h)};
+  ws.onopen=()=>ws.send(JSON.stringify({t:"join",room:code}));
+  ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}
+   if(m.t==="full"){rej(new Error("full"));return}
+   if(m.t==="s"){peers=m.peers.map(x=>({isMe:x.id===m.me,presence:x.p}));if(!ok){ok=true;res(rm)}hs.forEach(h=>h())}};
+  ws.onerror=()=>{if(!ok)rej(new Error("conn"))};
+  ws.onclose=()=>{if(!ok)rej(new Error("conn"))};
+ });
+}
+async function start(online){
+ name=$("nm").value.trim()||"Player";
+ code=($("cd").value.trim().toLowerCase().replace(/[^a-z0-9]/g,""))||"";
+ $("home").classList.add("hide");$("game").classList.remove("hide");
+ if(!online){board();begin();return}
+ if(!code)code="r"+Math.random().toString(36).slice(2,6);
+ $("qa").innerHTML='<div class="wait"><div class="qt">Joining room…</div></div>';
+ try{
+  rm=await joinRoom(code);
+  rm.onPeers(()=>{board();const f=friend();if(!started&&f&&f.presence.t)begin();else advance()});
+  sync({done:0});board();
+  $("qa").innerHTML='<div class="wait"><div class="qt">Waiting for your friend…</div><p>Ask them to open this page and enter the room code</p><div class="code">'+esc(code.toUpperCase())+'</div></div>';
+  if(friend()&&friend().presence.t)begin();
+ }catch(e){
+  rm=null;board();
+  $("qa").innerHTML='<div class="wait"><div class="qt">Couldn’t join the room.</div><p>The room may already have two players, or the connection failed. Try a different code.</p><div class="nx" id="pr" style="cursor:pointer">Practice alone</div></div>';
+  $("pr").onclick=()=>begin();
+ }
+}
+$("nm").oninput=e=>{const v=e.target.value.trim();$("av").textContent=(v[0]||"Q").toUpperCase();$("hi").textContent=v?"Hi, "+v:"Quiz Challenge"};
+function drawCats(){
+ $("cats").innerHTML=CATS.map(c=>'<button class="cc'+(sel.includes(c)?' on':'')+'" data-c="'+c+'">'+c+'</button>').join("");
+ $("cs").textContent=(sel.length===CATS.length?"All "+CATS.length+" categories":sel.join(", "))+" · "+Q.filter(q=>sel.includes(q[0])).length+" questions";
+}
+$("cats").onclick=e=>{const c=e.target.dataset.c;if(!c)return;if(sel.includes(c)){if(sel.length>1)sel=sel.filter(x=>x!==c)}else sel.push(c);drawCats()};
+$("catb").onclick=()=>$("cw").classList.toggle("hide");
+drawCats();
+$("go").onclick=()=>start(true);$("solo").onclick=()=>start(false);
+</script></main></body></html>
