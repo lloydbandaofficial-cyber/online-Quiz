@@ -215,10 +215,11 @@ const Q=[
 ];
 const $=id=>document.getElementById(id),N=150,PER=15,STG=10,T=15;
 const CATS=Object.values(C);let myT=Date.now();
-let rm=null,order=[],r=0,score=0,left=T,tm=null,code="",name="",started=false,pending=0,locked=false,stg=[],hist=[],myBase=0,fBase=0,phase="q",wantRdy=0;
+let rm=null,order=[],r=0,score=0,left=T,tm=null,code="",name="",started=false,pending=0,locked=false,stg=[],hist=[],myBase=0,fBase=0,phase="q",wantRdy=0,miss=0,over=false,lastF=null,rt=null;
 function rng(s){let h=1779033703^s.length;for(let i=0;i<s.length;i++){h=Math.imul(h^s.charCodeAt(i),3432918353);h=h<<13|h>>>19}let a=h>>>0;return()=>{a+=0x6D2B79F5;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
 function pick(seed,mask,n){const f=rng(seed+mask.join("|")),a=Q.map((_,i)=>i).filter(i=>mask.includes(Q[i][0]));for(let i=a.length-1;i>0;i--){const j=Math.floor(f()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a.slice(0,n)}
-Q.forEach((q,i)=>{if(q[2].every(o=>/^[0-9]/.test(o)))return;const f=rng("opt"+i),ix=q[2].map((_,k)=>k);for(let k=ix.length-1;k>0;k--){const j=Math.floor(f()*(k+1));[ix[k],ix[j]]=[ix[j],ix[k]]}const a=q[2][q[3]];q[2]=ix.map(k=>q[2][k]);q[3]=q[2].indexOf(a)});
+const Q0=Q.map(q=>[q[0],q[1],q[2].slice(),q[3]]);
+function shuffleOpts(seed){Q.forEach((q,i)=>{const o=Q0[i],a=o[2][o[3]],opts=o[2].slice();if(!opts.every(x=>/^[0-9]/.test(x))){const f=rng(seed+"|o"+i);for(let k=opts.length-1;k>0;k--){const j=Math.floor(f()*(k+1));[opts[k],opts[j]]=[opts[j],opts[k]]}}q[2]=opts;q[3]=opts.indexOf(a)})}
 let ac=null,muted=false;
 try{muted=localStorage.getItem("qc_mute")==="1"}catch(e){}
 function audio(){try{if(!ac){const A=window.AudioContext||window.webkitAudioContext;if(A)ac=new A()}if(ac&&ac.state==="suspended")ac.resume()}catch(e){}return ac}
@@ -266,11 +267,13 @@ function choose(i){
  const q=Q[order[r]];
  document.querySelectorAll(".o").forEach((b,k)=>{b.disabled=true;if(k===q[3])b.classList.add("ok");else if(k===i)b.classList.add("no")});
  if(i===q[3]){sGood();const pts=100+left*3;score+=pts;$("st").textContent="Correct! +"+pts}else{sBad();$("st").textContent=i<0?"Time’s up!":"Not quite."}
- sync({aq:r+1,ar:i===q[3]?1:(i<0?3:2)});board();fnote();
+ if(i<0)miss++;else miss=0;
+ sync({aq:r+1,ar:i===q[3]?1:(i<0?3:2),ms:miss});board();fnote();
+ if(rm&&miss>=3){forfeit(false,"You missed 3 questions in a row, so the game ended.");return}
  setTimeout(()=>{pending=r+1;sync({done:pending});advance()},1800);
 }
 function advance(){
- if(!pending)return;
+ if(over||!pending)return;
  const f=friend();
  if(rm&&f&&(f.presence.done||0)<pending){$("st").textContent="Waiting for your friend…";return}
  const p=pending;pending=0;
@@ -293,10 +296,25 @@ function stageDone(p){
  board();
 }
 function checkReady(){
- if(phase!=="res"||!wantRdy)return;
+ if(over||phase!=="res"||!wantRdy)return;
  const f=friend();
- if(rm&&f&&(f.presence.rdy||0)<wantRdy){const b=$("nxst");if(b)b.textContent="Waiting for your friend…";return}
- phase="q";r=wantRdy*PER;wantRdy=0;show();
+ if(rm&&f&&(f.presence.rdy||0)<wantRdy){const b=$("nxst");if(b)b.textContent="Waiting for your friend…";
+  if(!rt)rt=setTimeout(()=>{rt=null;if(!over&&phase==="res"&&wantRdy){const g=friend();forfeit(true,(g?fname(g):"Your friend")+" did not continue for 60 seconds.")}},60000);
+  return}
+ clearTimeout(rt);rt=null;phase="q";r=wantRdy*PER;wantRdy=0;show();
+}
+function forfeit(iWin,msg){
+ if(over)return;over=true;clearInterval(tm);clearTimeout(rt);rt=null;pending=0;wantRdy=0;
+ const f=friend(),fn=f?fname(f):(lastF?lastF.n:"Friend"),fs=f?(f.presence.score||0):(lastF?lastF.s:0);
+ if(iWin)sGood();else sBad();
+ const rows=hist.map((x,i)=>{const w=!x.has?"":x.me===x.fr?"Tie":x.me>x.fr?"You won":esc(x.fn)+" won";return '<div class="lr"><span class="ln"><b>Stage '+(i+1)+' · '+esc(x.c)+'</b><small>You '+x.me+(x.has?' · '+esc(x.fn)+' '+x.fr+' · '+w:'')+'</small></span></div>'}).join("");
+ $("qa").innerHTML='<div class="qt" style="text-align:center">'+(iWin?"You win! 🎉":"You lose")+'</div><div class="qn" style="text-align:center">'+esc(msg)+'</div>'
+  +'<h3 style="margin-top:6px">Scores so far</h3>'
+  +'<div class="lr"><span class="ln"><b>You</b><small>'+score+' points</small></span></div>'
+  +'<div class="lr"><span class="ln"><b>'+esc(fn)+'</b><small>'+fs+' points</small></span></div>'
+  +(rows?'<h3 style="margin-top:12px">Stages played</h3>'+rows:'')
+  +'<div class="nx" style="cursor:pointer" onclick="location.reload()">Play again</div>';
+ board();
 }
 function end(){
  const f=friend(),rows=[{n:String(name).slice(0,16),s:score,me:1}];
@@ -309,20 +327,22 @@ function end(){
 }
 function begin(){
  if(started)return;started=true;
- stg=CATS.slice();hist=[];myBase=0;fBase=0;phase="q";wantRdy=0;
- order=build(code||String(Date.now()),stg);r=0;score=0;sync({done:0,rdy:0,aq:0,ar:0});show();
+ stg=CATS.slice();hist=[];myBase=0;fBase=0;phase="q";wantRdy=0;miss=0;over=false;lastF=null;clearTimeout(rt);rt=null;
+ let sd=String(Date.now())+Math.random();
+ if(rm){const f=friend();sd=code+"|"+Math.min(myT,f&&f.presence.t?f.presence.t:myT)}
+ shuffleOpts(sd);order=build(sd,stg);r=0;score=0;sync({done:0,rdy:0,aq:0,ar:0,ms:0});show();
 }
 function joinRoom(code,mode){
  return new Promise((res,rej)=>{
   const ws=new WebSocket((location.protocol==="https:"?"wss://":"ws://")+location.host);
-  let peers=[],hs=[],ok=false;
-  const rm={peers:()=>peers,presence:p=>{if(ws.readyState===1)ws.send(JSON.stringify({t:"p",p:p}));return Promise.resolve()},onPeers:h=>hs.push(h)};
+  let peers=[],hs=[],ok=false,drop=null;
+  const rm={peers:()=>peers,presence:p=>{if(ws.readyState===1)ws.send(JSON.stringify({t:"p",p:p}));return Promise.resolve()},onPeers:h=>hs.push(h),onDrop:h=>{drop=h}};
   ws.onopen=()=>ws.send(JSON.stringify({t:"join",room:code,mode:mode}));
   ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}
    if(m.t==="full"||m.t==="exists"||m.t==="none"){rej(new Error(m.t));return}
    if(m.t==="s"){peers=m.peers.map(x=>({isMe:x.id===m.me,presence:x.p}));if(!ok){ok=true;res(rm)}hs.forEach(h=>h())}};
   ws.onerror=()=>{if(!ok)rej(new Error("conn"))};
-  ws.onclose=()=>{if(!ok)rej(new Error("conn"))};
+  ws.onclose=()=>{if(!ok)rej(new Error("conn"));else if(drop)drop()};
  });
 }
 function mkCode(){const a="abcdefghjkmnpqrstuvwxyz23456789";let c="";for(let i=0;i<4;i++)c+=a[Math.floor(Math.random()*a.length)];return c}
@@ -342,7 +362,15 @@ async function start(mode){
     try{rm=await joinRoom(code,"create");break}catch(e){if(e.message!=="exists"||i>=5)throw e}
    }
   }else{code=typed;rm=await joinRoom(code,"join")}
-  rm.onPeers(()=>{board();fnote();const f=friend();if(!started&&f&&f.presence.t)begin();else{advance();checkReady()}});
+  rm.onPeers(()=>{
+   const f=friend();if(f)lastF={n:fname(f),s:f.presence.score||0};
+   if(over)return;
+   if(started&&!f){forfeit(true,(lastF?lastF.n:"Your friend")+" left the game.");return}
+   if(started&&f&&(f.presence.ms||0)>=3){forfeit(true,fname(f)+" missed 3 questions in a row.");return}
+   board();fnote();
+   if(!started&&f&&f.presence.t)begin();else{advance();checkReady()}
+  });
+  rm.onDrop(()=>{if(over)return;over=true;clearInterval(tm);clearTimeout(rt);rt=null;$("qa").innerHTML='<div class="wait"><div class="qt">Connection lost</div><p>Check your internet, then start again.</p><div class="nx" style="cursor:pointer" onclick="location.reload()">Back to start</div></div>'});
   sync({done:0});board();
   if(mode==="create"){
    $("qa").innerHTML='<div class="wait"><div class="qt">Room created!</div><p>Tell your friend to tap <b>Join room</b> and enter this code</p><div class="code">'+esc(code.toUpperCase())+'</div><p>Waiting for your friend…</p></div>';
