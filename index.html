@@ -7,7 +7,7 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2f2a82;--sheet:#1c1b33;--fg:#f1f0fb;--mut:#a5a3c4;--bd:#34325a;--ink:#0d0c20;--pu:#7468f0}}
 :root[data-theme="dark"]{--bg:#2f2a82;--sheet:#1c1b33;--fg:#f1f0fb;--mut:#a5a3c4;--bd:#34325a;--ink:#0d0c20;--pu:#7468f0}
 *{box-sizing:border-box}html{background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:#fff;font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{margin:0;background:var(--bg);color:#fff;font:16px/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif}
 main{max-width:430px;margin:0 auto}.hide{display:none}
 .top{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 10px}
 .top small{opacity:.8;font-size:12px;letter-spacing:.06em}.top h1{margin:2px 0 0;font-size:22px}
@@ -37,11 +37,11 @@ button.li{cursor:pointer}.li small{display:block;color:var(--mut)}.ic{width:40px
 .lr{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:rgba(122,112,232,.12);margin:10px 0}
 .ln{flex:1}.ln small{display:block;color:var(--mut)}.rk{width:22px;color:var(--mut);font-weight:700}
 .cg{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 8px}.cc{border:1px solid var(--bd);background:none;color:var(--fg);border-radius:999px;padding:8px 14px;font:inherit;cursor:pointer}.cc.on{background:var(--pu);color:#fff;border-color:var(--pu)}#cw small{color:var(--mut)}
-</style></head><body><main>
+*,button,input{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style></head><body><main>
 <section id="home">
  <header class="top"><div><small>WELCOME</small><h1 id="hi">Quiz Challenge</h1></div><div class="av" id="av">Q</div></header>
  <div class="sheet">
-  <div class="feat"><small>FEATURED</small><h2>Take part in challenges with a friend</h2><p>One person creates a room, the other joins with its code.</p>
+  <div class="feat"><small>FEATURED</small><h2>Take part in challenges with a friend</h2><p>10 stages, one category each. One person creates a room, the other joins with its code.</p>
    <input id="nm" placeholder="Your name" maxlength="16">
    <button class="pill" id="create">Create room</button>
    <div style="text-align:center;opacity:.85;margin:10px 0 2px;font-size:13px">or join a friend's room</div>
@@ -49,9 +49,9 @@ button.li{cursor:pointer}.li small{display:block;color:var(--mut)}.ic{width:40px
    <button class="pill" id="join" style="background:transparent;color:#fff;border:2px solid #fff">Join room</button>
    <div id="err" style="margin-top:8px;font-size:13px;min-height:16px;color:#ffd6d6"></div></div>
   <h3>Quizzes</h3>
-  <button class="li" id="solo"><span class="ic">▶</span><span><b>Practice alone</b><small>10 random questions</small></span></button>
-  <button class="li" id="catb"><span class="ic">★</span><span><b>Choose categories</b><small id="cs"></small></span></button>
-  <div id="cw" class="hide"><div class="cg" id="cats"></div><small>With a friend, the room creator's categories are used.</small></div>
+  <button class="li" id="solo"><span class="ic">▶</span><span><b>Practice alone</b><small>All 10 stages, 15 questions each</small></span></button>
+  <button class="li" id="catb"><span class="ic">★</span><span><b>See the 10 stages</b><small id="cs"></small></span></button>
+  <div id="cw" class="hide"><div class="cg" id="cats"></div><small>You play them in this order. Each stage has 15 questions and its own winner.</small></div>
  </div>
 </section>
 <section id="game" class="hide">
@@ -101,18 +101,18 @@ const Q=[
 ["Sports","Who won the 2022 men’s FIFA World Cup?",["France","Brazil","Argentina","Croatia"],2],
 ["Sports","Which sport is played at Wimbledon?",["Tennis","Cricket","Golf","Athletics"],0],
 ["Sports","What colour card sends a footballer off?",["Blue","Green","White","Red"],3],
-["Science and Tech","What is the closest star to Earth?",["Sirius","The Sun","Polaris","Alpha Centauri"],1],
-["Science and Tech","What does CPU stand for?",["Central Processing Unit","Computer Power Utility","Central Program User","Control Processing Upload"],0],
-["Science and Tech","At sea level, water boils at about…",["50°C","75°C","100°C","150°C"],2],
-["Science and Tech","What is the chemical formula for water?",["CO₂","H₂O","O₂","NaCl"],1],
-["Science and Tech","Which planet is famous for its rings?",["Mercury","Venus","Saturn","Mars"],2],
+["Science and Technology","What is the closest star to Earth?",["Sirius","The Sun","Polaris","Alpha Centauri"],1],
+["Science and Technology","What does CPU stand for?",["Central Processing Unit","Computer Power Utility","Central Program User","Control Processing Upload"],0],
+["Science and Technology","At sea level, water boils at about…",["50°C","75°C","100°C","150°C"],2],
+["Science and Technology","What is the chemical formula for water?",["CO₂","H₂O","O₂","NaCl"],1],
+["Science and Technology","Which planet is famous for its rings?",["Mercury","Venus","Saturn","Mars"],2],
 ["International","Where is the United Nations headquarters?",["Geneva","New York City","Paris","London"],1],
 ["International","What is the currency of Japan?",["Yuan","Won","Yen","Baht"],2],
 ["International","Which country gifted the Statue of Liberty to the USA?",["Germany","France","Italy","Canada"],1],
 ["International","Machu Picchu is in which country?",["Peru","Chile","Bolivia","Ecuador"],0],
 ["International","What is the official language of Brazil?",["Spanish","French","Portuguese","Italian"],2]
 ];
-const C={g:"General Knowledge",m:"Malawi",h:"African History",e:"Geography",a:"Animals",s:"Music",r:"Art and Culture",p:"Sports",t:"Science and Tech",i:"International"};
+const C={g:"General Knowledge",m:"Malawi",h:"African History",e:"Geography",a:"Animals",s:"Music",r:"Art and Culture",p:"Sports",t:"Science and Technology",i:"International"};
 [
 ["g","How many days are in a leap year?",["364","365","366","367"],2],
 ["g","How many sides does a hexagon have?",["5","7","8","6"],3],
@@ -215,11 +215,12 @@ const C={g:"General Knowledge",m:"Malawi",h:"African History",e:"Geography",a:"A
 ["i","Which country is known for the ancient Great Wall?",["India","China","Japan","Mongolia"],1],
 ["i","Which organisation coordinates international postal services?",["International Olympic Committee","Universal Postal Union","World Trade Organization","International Labour Organization"],1]
 ].forEach(x=>Q.push([C[x[0]],x[1],x[2],x[3]]));
-const $=id=>document.getElementById(id),N=10,T=15;
-const CATS=Object.values(C);let sel=CATS.slice();const myT=Date.now();
-let rm=null,order=[],r=0,score=0,left=T,tm=null,code="",name="",started=false,pending=0,locked=false;
+const $=id=>document.getElementById(id),N=150,PER=15,STG=10,T=15;
+const CATS=Object.values(C);let myT=Date.now();
+let rm=null,order=[],r=0,score=0,left=T,tm=null,code="",name="",started=false,pending=0,locked=false,stg=[],hist=[],myBase=0,fBase=0,phase="q",wantRdy=0;
 function rng(s){let h=1779033703^s.length;for(let i=0;i<s.length;i++){h=Math.imul(h^s.charCodeAt(i),3432918353);h=h<<13|h>>>19}let a=h>>>0;return()=>{a+=0x6D2B79F5;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
-function pick(seed,mask){const f=rng(seed+mask.join("|")),a=Q.map((_,i)=>i).filter(i=>mask.includes(Q[i][0]));for(let i=a.length-1;i>0;i--){const j=Math.floor(f()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a.slice(0,N)}
+function pick(seed,mask,n){const f=rng(seed+mask.join("|")),a=Q.map((_,i)=>i).filter(i=>mask.includes(Q[i][0]));for(let i=a.length-1;i>0;i--){const j=Math.floor(f()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a.slice(0,n)}
+function build(seed,cats){let o=[];cats.forEach(c=>o.push(...pick(seed,[c],PER)));return o}
 const friend=()=>rm?rm.peers().find(p=>!p.isMe):null;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fname=f=>String(f.presence.name||"Friend").slice(0,16);
@@ -228,12 +229,12 @@ function board(){
  const f=friend();
  $("fr").style.display=rm?"":"none";
  $("fr").textContent=f?fname(f)+" "+(f.presence.score||0):"Friend –";
- $("pg").style.width=(started?r/N*100:0)+"%";
+ $("pg").style.width=(started?(r%PER)/PER*100:0)+"%";
 }
-function sync(extra){if(rm)rm.presence(Object.assign({name:name,score:score,t:myT,cats:sel.join("|")},extra||{})).catch(()=>{})}
+function sync(extra){if(rm)rm.presence(Object.assign({name:name,score:score,t:myT},extra||{})).catch(()=>{})}
 function show(){
  const q=Q[order[r]];locked=false;left=T;
- $("qa").innerHTML='<div class="tm" id="tm" style="--p:100"><span id="tn">'+T+'</span></div><div class="qn">Question '+(r+1)+' of '+N+' · '+q[0]+'</div><div class="qt">'+q[1]+'</div><div id="ops"></div><div class="nx" id="st">Pick an answer</div>';
+ $("qa").innerHTML='<div class="tm" id="tm" style="--p:100"><span id="tn">'+T+'</span></div><div class="qn">Stage '+(Math.floor(r/PER)+1)+' of '+STG+' · '+q[0]+' · Question '+(r%PER+1)+' of '+PER+'</div><div class="qt">'+q[1]+'</div><div id="ops"></div><div class="nx" id="st">Pick an answer</div>';
  q[2].forEach((o,i)=>{const b=document.createElement("button");b.className="o";b.textContent="ABCD"[i]+". "+o;b.onclick=()=>choose(i);$("ops").appendChild(b)});
  clearInterval(tm);tm=setInterval(()=>{left--;$("tn").textContent=Math.max(left,0);$("tm").style.setProperty("--p",left/T*100);if(left<=0)choose(-1)},1000);
  board();
@@ -251,8 +252,29 @@ function advance(){
  const f=friend();
  if(rm&&f&&(f.presence.done||0)<pending){$("st").textContent="Waiting for your friend…";return}
  const p=pending;pending=0;
+ if(p%PER===0)stageDone(p);else{r=p;show()}
+}
+function stageDone(p){
+ clearInterval(tm);
+ const si=p/PER-1,f=friend(),fs=f?(f.presence.score||0):0;
+ const mine=score-myBase,theirs=f?fs-fBase:0,fn=f?fname(f):"";
+ myBase=score;fBase=fs;
+ hist.push({c:stg[si],me:mine,fr:theirs,fn:fn,has:!!f});
  if(p>=N)return end();
- r=p;show();
+ phase="res";
+ const tie=mine===theirs,title=!f?"Stage "+(si+1)+" complete":tie?"Stage "+(si+1)+" is a tie!":mine>theirs?"You win Stage "+(si+1)+"! 🎉":esc(fn)+" wins Stage "+(si+1)+"!";
+ $("qa").innerHTML='<div class="qt" style="text-align:center">'+title+'</div><div class="qn" style="text-align:center">'+esc(stg[si])+'</div>'
+  +'<div class="lr"><span class="ln"><b>You</b><small>Stage: '+mine+' pts · Total: '+score+'</small></span></div>'
+  +(f?'<div class="lr"><span class="ln"><b>'+esc(fn)+'</b><small>Stage: '+theirs+' pts · Total: '+fs+'</small></span></div>':'')
+  +'<div class="nx" id="nxst" style="cursor:pointer">Start Stage '+(si+2)+': '+esc(stg[si+1])+' →</div>';
+ $("nxst").onclick=()=>{if(wantRdy)return;wantRdy=si+1;sync({rdy:wantRdy});checkReady()};
+ board();
+}
+function checkReady(){
+ if(phase!=="res"||!wantRdy)return;
+ const f=friend();
+ if(rm&&f&&(f.presence.rdy||0)<wantRdy){const b=$("nxst");if(b)b.textContent="Waiting for your friend…";return}
+ phase="q";r=wantRdy*PER;wantRdy=0;show();
 }
 function end(){
  const f=friend(),rows=[{n:String(name).slice(0,16),s:score,me:1}];
@@ -260,15 +282,13 @@ function end(){
  rows.sort((a,b)=>b.s-a.s);
  const tie=rows.length>1&&rows[0].s===rows[1].s;
  const top=tie?"It’s a tie!":rows.length===1?"Nice game!":rows[0].me?"You win! 🎉":rows[0].n+" wins!";
- $("qa").innerHTML='<div class="qt" style="text-align:center">'+esc(top)+'</div><h3 style="margin-top:6px">Leaderboard</h3>'+rows.map((x,i)=>'<div class="lr"><span class="rk">'+(i+1)+'</span><span class="av sm">'+esc((x.n[0]||"?").toUpperCase())+'</span><span class="ln"><b>'+esc(x.n)+(x.me?" (you)":"")+'</b><small>'+x.s+' points</small></span>'+(i===0&&!tie?"<span>👑</span>":"")+'</div>').join("")+'<div class="nx" style="cursor:pointer" onclick="location.reload()">Play again</div>';
+ $("qa").innerHTML='<div class="qt" style="text-align:center">'+esc(top)+'</div><h3 style="margin-top:6px">Leaderboard</h3>'+rows.map((x,i)=>'<div class="lr"><span class="rk">'+(i+1)+'</span><span class="av sm">'+esc((x.n[0]||"?").toUpperCase())+'</span><span class="ln"><b>'+esc(x.n)+(x.me?" (you)":"")+'</b><small>'+x.s+' points</small></span>'+(i===0&&!tie?"<span>👑</span>":"")+'</div>').join("")+'<h3 style="margin-top:12px">Stages</h3>'+hist.map((x,i)=>{const w=!x.has?"":x.me===x.fr?"Tie":x.me>x.fr?"You won":esc(x.fn)+" won";return '<div class="lr"><span class="ln"><b>Stage '+(i+1)+' · '+esc(x.c)+'</b><small>You '+x.me+(x.has?' · '+esc(x.fn)+' '+x.fr+' · '+w:'')+'</small></span></div>'}).join("")+'<div class="nx" style="cursor:pointer" onclick="location.reload()">Play again</div>';
  $("pg").style.width="100%";board();
 }
 function begin(){
  if(started)return;started=true;
- let m=sel.slice();const f=friend();
- if(rm&&f&&f.presence.cats){const ft=f.presence.t||0,fc=String(f.presence.cats);if(ft<myT||(ft===myT&&fc<m.join("|")))m=fc.split("|")}
- m=m.filter(x=>CATS.includes(x));if(!m.length)m=CATS.slice();
- order=pick(code||String(Date.now()),m);r=0;score=0;sync({done:0});show();
+ stg=CATS.slice();hist=[];myBase=0;fBase=0;phase="q";wantRdy=0;
+ order=build(code||String(Date.now()),stg);r=0;score=0;sync({done:0,rdy:0});show();
 }
 function joinRoom(code,mode){
  return new Promise((res,rej)=>{
@@ -285,7 +305,7 @@ function joinRoom(code,mode){
 }
 function mkCode(){const a="abcdefghjkmnpqrstuvwxyz23456789";let c="";for(let i=0;i<4;i++)c+=a[Math.floor(Math.random()*a.length)];return c}
 async function start(mode){
- name=$("nm").value.trim()||"Player";
+ name=$("nm").value.trim()||"Player";myT=Date.now();
  const typed=($("cd").value.trim().toLowerCase().replace(/[^a-z0-9]/g,""))||"";
  $("err").textContent="";
  if(mode==="join"&&!typed){$("err").textContent="Type your friend's room code first.";return}
@@ -299,7 +319,7 @@ async function start(mode){
     try{rm=await joinRoom(code,"create");break}catch(e){if(e.message!=="exists"||i>=5)throw e}
    }
   }else{code=typed;rm=await joinRoom(code,"join")}
-  rm.onPeers(()=>{board();const f=friend();if(!started&&f&&f.presence.t)begin();else advance()});
+  rm.onPeers(()=>{board();const f=friend();if(!started&&f&&f.presence.t)begin();else{advance();checkReady()}});
   sync({done:0});board();
   if(mode==="create"){
    $("qa").innerHTML='<div class="wait"><div class="qt">Room created!</div><p>Tell your friend to tap <b>Join room</b> and enter this code</p><div class="code">'+esc(code.toUpperCase())+'</div><p>Waiting for your friend…</p></div>';
@@ -317,10 +337,9 @@ async function start(mode){
 }
 $("nm").oninput=e=>{const v=e.target.value.trim();$("av").textContent=(v[0]||"Q").toUpperCase();$("hi").textContent=v?"Hi, "+v:"Quiz Challenge"};
 function drawCats(){
- $("cats").innerHTML=CATS.map(c=>'<button class="cc'+(sel.includes(c)?' on':'')+'" data-c="'+c+'">'+c+'</button>').join("");
- $("cs").textContent=(sel.length===CATS.length?"All "+CATS.length+" categories":sel.join(", "))+" · "+Q.filter(q=>sel.includes(q[0])).length+" questions";
+ $("cats").innerHTML=CATS.map((c,i)=>'<button class="cc on" style="pointer-events:none">'+(i+1)+'. '+c+'</button>').join("");
+ $("cs").textContent=STG+" stages · 15 questions each";
 }
-$("cats").onclick=e=>{const c=e.target.dataset.c;if(!c)return;if(sel.includes(c)){if(sel.length>1)sel=sel.filter(x=>x!==c)}else sel.push(c);drawCats()};
 $("catb").onclick=()=>$("cw").classList.toggle("hide");
 drawCats();
 $("create").onclick=()=>start("create");$("join").onclick=()=>start("join");$("solo").onclick=()=>start("solo");
