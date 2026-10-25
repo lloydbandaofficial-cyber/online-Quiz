@@ -28,8 +28,9 @@ wss.on("connection",ws=>{
       const c=rooms.get(code)&&rooms.get(code).get(ws);if(!c)return;
       const p=m.p||{};
       if(p.name!==undefined)c.p.name=String(p.name).slice(0,16);
-      if(p.score!==undefined)c.p.score=Math.max(0,Math.min(5000,+p.score||0));
-      if(p.done!==undefined)c.p.done=Math.max(0,Math.min(10,+p.done||0));
+      if(p.score!==undefined)c.p.score=Math.max(0,Math.min(50000,+p.score||0));
+      if(p.done!==undefined)c.p.done=Math.max(0,Math.min(200,+p.done||0));
+      if(p.rdy!==undefined)c.p.rdy=Math.max(0,Math.min(10,+p.rdy||0));
       if(p.t!==undefined)c.p.t=+p.t||0;
       if(p.cats!==undefined)c.p.cats=String(p.cats).slice(0,300);
       snap(code);
