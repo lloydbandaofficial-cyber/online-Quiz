@@ -41,14 +41,17 @@ button.li{cursor:pointer}.li small{display:block;color:var(--mut)}.ic{width:40px
 <section id="home">
  <header class="top"><div><small>WELCOME</small><h1 id="hi">Quiz Challenge</h1></div><div class="av" id="av">Q</div></header>
  <div class="sheet">
-  <div class="feat"><small>FEATURED</small><h2>Take part in challenges with a friend</h2><p>Type the same room code on both phones.</p>
+  <div class="feat"><small>FEATURED</small><h2>Take part in challenges with a friend</h2><p>One person creates a room, the other joins with its code.</p>
    <input id="nm" placeholder="Your name" maxlength="16">
-   <input id="cd" placeholder="Room code (e.g. LILO)" maxlength="12" autocapitalize="characters">
-   <button class="pill" id="go">Find friends · Play online</button></div>
+   <button class="pill" id="create">Create room</button>
+   <div style="text-align:center;opacity:.85;margin:10px 0 2px;font-size:13px">or join a friend's room</div>
+   <input id="cd" placeholder="Enter room code" maxlength="12" autocapitalize="characters">
+   <button class="pill" id="join" style="background:transparent;color:#fff;border:2px solid #fff">Join room</button>
+   <div id="err" style="margin-top:8px;font-size:13px;min-height:16px;color:#ffd6d6"></div></div>
   <h3>Quizzes</h3>
   <button class="li" id="solo"><span class="ic">▶</span><span><b>Practice alone</b><small>10 random questions</small></span></button>
   <button class="li" id="catb"><span class="ic">★</span><span><b>Choose categories</b><small id="cs"></small></span></button>
-  <div id="cw" class="hide"><div class="cg" id="cats"></div><small>With a friend, the categories of whoever joins the room first are used.</small></div>
+  <div id="cw" class="hide"><div class="cg" id="cats"></div><small>With a friend, the room creator's categories are used.</small></div>
  </div>
 </section>
 <section id="game" class="hide">
@@ -267,36 +270,49 @@ function begin(){
  m=m.filter(x=>CATS.includes(x));if(!m.length)m=CATS.slice();
  order=pick(code||String(Date.now()),m);r=0;score=0;sync({done:0});show();
 }
-function joinRoom(code){
+function joinRoom(code,mode){
  return new Promise((res,rej)=>{
   const ws=new WebSocket((location.protocol==="https:"?"wss://":"ws://")+location.host);
   let peers=[],hs=[],ok=false;
   const rm={peers:()=>peers,presence:p=>{if(ws.readyState===1)ws.send(JSON.stringify({t:"p",p:p}));return Promise.resolve()},onPeers:h=>hs.push(h)};
-  ws.onopen=()=>ws.send(JSON.stringify({t:"join",room:code}));
+  ws.onopen=()=>ws.send(JSON.stringify({t:"join",room:code,mode:mode}));
   ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}
-   if(m.t==="full"){rej(new Error("full"));return}
+   if(m.t==="full"||m.t==="exists"||m.t==="none"){rej(new Error(m.t));return}
    if(m.t==="s"){peers=m.peers.map(x=>({isMe:x.id===m.me,presence:x.p}));if(!ok){ok=true;res(rm)}hs.forEach(h=>h())}};
   ws.onerror=()=>{if(!ok)rej(new Error("conn"))};
   ws.onclose=()=>{if(!ok)rej(new Error("conn"))};
  });
 }
-async function start(online){
+function mkCode(){const a="abcdefghjkmnpqrstuvwxyz23456789";let c="";for(let i=0;i<4;i++)c+=a[Math.floor(Math.random()*a.length)];return c}
+async function start(mode){
  name=$("nm").value.trim()||"Player";
- code=($("cd").value.trim().toLowerCase().replace(/[^a-z0-9]/g,""))||"";
+ const typed=($("cd").value.trim().toLowerCase().replace(/[^a-z0-9]/g,""))||"";
+ $("err").textContent="";
+ if(mode==="join"&&!typed){$("err").textContent="Type your friend's room code first.";return}
  $("home").classList.add("hide");$("game").classList.remove("hide");
- if(!online){board();begin();return}
- if(!code)code="r"+Math.random().toString(36).slice(2,6);
- $("qa").innerHTML='<div class="wait"><div class="qt">Joining room…</div></div>';
+ if(mode==="solo"){code="";board();begin();return}
+ $("qa").innerHTML='<div class="wait"><div class="qt">'+(mode==="create"?"Creating room…":"Joining room…")+'</div></div>';
  try{
-  rm=await joinRoom(code);
+  if(mode==="create"){
+   for(let i=0;;i++){
+    code=mkCode();
+    try{rm=await joinRoom(code,"create");break}catch(e){if(e.message!=="exists"||i>=5)throw e}
+   }
+  }else{code=typed;rm=await joinRoom(code,"join")}
   rm.onPeers(()=>{board();const f=friend();if(!started&&f&&f.presence.t)begin();else advance()});
   sync({done:0});board();
-  $("qa").innerHTML='<div class="wait"><div class="qt">Waiting for your friend…</div><p>Ask them to open this page and enter the room code</p><div class="code">'+esc(code.toUpperCase())+'</div></div>';
+  if(mode==="create"){
+   $("qa").innerHTML='<div class="wait"><div class="qt">Room created!</div><p>Tell your friend to tap <b>Join room</b> and enter this code</p><div class="code">'+esc(code.toUpperCase())+'</div><p>Waiting for your friend…</p></div>';
+  }else{
+   $("qa").innerHTML='<div class="wait"><div class="qt">Joined room '+esc(code.toUpperCase())+'</div><p>Starting…</p></div>';
+  }
   if(friend()&&friend().presence.t)begin();
  }catch(e){
   rm=null;board();
-  $("qa").innerHTML='<div class="wait"><div class="qt">Couldn’t join the room.</div><p>The room may already have two players, or the connection failed. Try a different code.</p><div class="nx" id="pr" style="cursor:pointer">Practice alone</div></div>';
+  const msg=e.message==="none"?"Room not found. Check the code, or ask your friend to create the room first.":e.message==="full"?"That room already has two players.":e.message==="exists"?"Could not create a room. Please try again.":"Connection failed. Check your internet and try again.";
+  $("qa").innerHTML='<div class="wait"><div class="qt">Couldn’t '+(mode==="create"?"create":"join")+' the room.</div><p>'+msg+'</p><div class="nx" id="bk" style="cursor:pointer">Back</div><div class="nx" id="pr" style="cursor:pointer;margin-top:8px">Practice alone</div></div>';
   $("pr").onclick=()=>begin();
+  $("bk").onclick=()=>location.reload();
  }
 }
 $("nm").oninput=e=>{const v=e.target.value.trim();$("av").textContent=(v[0]||"Q").toUpperCase();$("hi").textContent=v?"Hi, "+v:"Quiz Challenge"};
@@ -307,5 +323,5 @@ function drawCats(){
 $("cats").onclick=e=>{const c=e.target.dataset.c;if(!c)return;if(sel.includes(c)){if(sel.length>1)sel=sel.filter(x=>x!==c)}else sel.push(c);drawCats()};
 $("catb").onclick=()=>$("cw").classList.toggle("hide");
 drawCats();
-$("go").onclick=()=>start(true);$("solo").onclick=()=>start(false);
+$("create").onclick=()=>start("create");$("join").onclick=()=>start("join");$("solo").onclick=()=>start("solo");
 </script></main></body></html>
