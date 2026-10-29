@@ -41,7 +41,7 @@ button.li{cursor:pointer}.li small{display:block;color:var(--mut)}.ic{width:40px
 <section id="home">
  <header class="top"><div><small>WELCOME</small><h1 id="hi">Quiz Challenge</h1></div><div class="av" id="av">Q</div></header>
  <div class="sheet">
-  <div class="feat"><small>FEATURED</small><h2>Take part in challenges with a friend</h2><p>10 stages, one category each. One person creates a room, the other joins with its code.</p>
+  <div class="feat"><small>FEATURED</small><h2>Take part in challenges with a friend</h2><p>5 random categories, 10 questions each. One person creates a room, the other joins with its code.</p>
    <input id="nm" placeholder="Your name" maxlength="16">
    <button class="pill" id="create">Create room</button>
    <div style="text-align:center;opacity:.85;margin:10px 0 2px;font-size:13px">or join a friend's room</div>
@@ -49,9 +49,9 @@ button.li{cursor:pointer}.li small{display:block;color:var(--mut)}.ic{width:40px
    <button class="pill" id="join" style="background:transparent;color:#fff;border:2px solid #fff">Join room</button>
    <div id="err" style="margin-top:8px;font-size:13px;min-height:16px;color:#ffd6d6"></div></div>
   <h3>Quizzes</h3>
-  <button class="li" id="solo"><span class="ic">▶</span><span><b>Practice alone</b><small>All 10 stages, 15 questions each</small></span></button>
-  <button class="li" id="catb"><span class="ic">★</span><span><b>See the 10 stages</b><small id="cs"></small></span></button>
-  <div id="cw" class="hide"><div class="cg" id="cats"></div><small>You play them in this order. Each stage has 15 questions and its own winner.</small></div>
+  <button class="li" id="solo"><span class="ic">▶</span><span><b>Practice alone</b><small>1 random category, 2 questions</small></span></button>
+  <button class="li" id="catb"><span class="ic">★</span><span><b>See the 10 categories</b><small id="cs"></small></span></button>
+  <div id="cw" class="hide"><div class="cg" id="cats"></div><small>Each round picks 5 of these at random, with 10 questions each. Every category has its own winner, and questions you have already seen are avoided.</small></div>
  </div>
 </section>
 <section id="game" class="hide">
@@ -211,13 +211,263 @@ const Q=[
 ["International", "Which country is home to the city of Istanbul?", ["Greece", "Türkiye (Turkey)", "Egypt", "Bulgaria"], 1],
 ["International", "Which organisation maintains international civil aviation standards?", ["FIFA", "IMF", "ICAO", "IOC"], 2],
 ["International", "Which country is known for the ancient Great Wall?", ["India", "China", "Japan", "Mongolia"], 1],
-["International", "Which organisation coordinates international postal services?", ["International Olympic Committee", "Universal Postal Union", "World Trade Organization", "International Labour Organization"], 1]
+["International", "Which organisation coordinates international postal services?", ["International Olympic Committee", "Universal Postal Union", "World Trade Organization", "International Labour Organization"], 1],
+["General Knowledge", "How many colours are in a rainbow?", ["5", "6", "7", "8"], 2],
+["General Knowledge", "Which is the largest planet in our solar system?", ["Saturn", "Jupiter", "Neptune", "Earth"], 1],
+["General Knowledge", "What is the freezing point of water?", ["0°C", "10°C", "32°C", "100°C"], 0],
+["General Knowledge", "Which metal is liquid at room temperature?", ["Iron", "Lead", "Copper", "Mercury"], 3],
+["General Knowledge", "How many bones are in the adult human body?", ["186", "206", "226", "256"], 1],
+["General Knowledge", "Which language has the most native speakers worldwide?", ["English", "Mandarin Chinese", "Spanish", "Hindi"], 1],
+["General Knowledge", "What is the main ingredient in traditional bread dough?", ["Sugar", "Rice", "Flour", "Salt"], 2],
+["General Knowledge", "What is 15 multiplied by 4?", ["45", "55", "60", "65"], 2],
+["General Knowledge", "Which part of the body helps you keep your balance?", ["The inner ear", "The eyes", "The nose", "The tongue"], 0],
+["General Knowledge", "How many letters are in the English alphabet?", ["24", "25", "26", "27"], 2],
+["General Knowledge", "Which vitamin do we mainly get from sunlight?", ["Vitamin A", "Vitamin C", "Vitamin D", "Vitamin K"], 2],
+["General Knowledge", "Which shape has three sides?", ["Square", "Circle", "Pentagon", "Triangle"], 3],
+["General Knowledge", "Which planet is closest to the Sun?", ["Mercury", "Venus", "Earth", "Mars"], 0],
+["General Knowledge", "What is it called when liquid water turns into vapour?", ["Condensation", "Evaporation", "Freezing", "Melting"], 1],
+["General Knowledge", "Which is the longest bone in the human body?", ["Tibia", "Humerus", "Femur", "Radius"], 2],
+["General Knowledge", "What number does the Roman numeral X stand for?", ["5", "10", "50", "100"], 1],
+["General Knowledge", "How many sides does an octagon have?", ["6", "7", "8", "10"], 2],
+["General Knowledge", "What do bees collect from flowers to make honey?", ["Water", "Nectar", "Resin", "Seeds"], 1],
+["General Knowledge", "Which of these is a prime number?", ["9", "13", "15", "21"], 1],
+["General Knowledge", "Which month usually has only 28 days?", ["April", "June", "September", "February"], 3],
+["General Knowledge", "What do we call a person who studies stars and planets?", ["Astronomer", "Geologist", "Biologist", "Botanist"], 0],
+["General Knowledge", "Which part of a plant absorbs water from the soil?", ["Leaves", "Roots", "Petals", "Stem"], 1],
+["General Knowledge", "What is the largest organ of the human body?", ["Liver", "Heart", "Skin", "Lungs"], 2],
+["General Knowledge", "How many degrees are in a right angle?", ["45", "90", "120", "180"], 1],
+["General Knowledge", "Which gas do humans need to breathe to survive?", ["Oxygen", "Helium", "Hydrogen", "Methane"], 0],
+["Malawi", "On which date is Malawi’s Independence Day celebrated?", ["6 March", "6 July", "6 September", "6 December"], 1],
+["Malawi", "Who was Malawi’s first female president?", ["Cecilia Kadzamira", "Callista Mutharika", "Joyce Banda", "Vera Chirwa"], 2],
+["Malawi", "Which colours are on the Malawi flag?", ["Red, white and blue", "Green, yellow and black", "Blue, green and white", "Black, red and green"], 3],
+["Malawi", "Which Malawian national park lies along the Shire River and is known for elephants?", ["Liwonde National Park", "Kasungu National Park", "Nyika National Park", "Lengwe National Park"], 0],
+["Malawi", "Which Malawian national park, known for plateau scenery and zebras, is in the north?", ["Liwonde National Park", "Nyika National Park", "Lengwe National Park", "Majete Wildlife Reserve"], 1],
+["Malawi", "Which group of colourful fish from Lake Malawi is popular in aquariums?", ["Sharks", "Eels", "Cichlids", "Piranhas"], 2],
+["Malawi", "Chambo, a popular Malawian dish, is a type of which fish?", ["Catfish", "Sardine", "Salmon", "Tilapia"], 3],
+["Malawi", "Nsima is mainly made from which grain?", ["Maize flour", "Rice flour", "Wheat flour", "Potato flour"], 0],
+["Malawi", "Gule Wamkulu is a traditional dance of which people?", ["Tumbuka", "Chewa", "Yao", "Lomwe"], 1],
+["Malawi", "In which region of Malawi is the Mulanje Massif?", ["Central Region", "Southern Region", "Northern Region"], 1],
+["Malawi", "What is Lake Malawi called in Tanzania?", ["Lake Tanganyika", "Lake Victoria", "Lake Kivu", "Lake Nyasa"], 3],
+["Malawi", "Which river flows out of Lake Malawi and joins the Zambezi?", ["Shire River", "Limpopo River", "Ruvuma River", "Congo River"], 0],
+["Malawi", "What nickname is Malawi widely known by?", ["The Rainbow Nation", "The Warm Heart of Africa", "The Pearl of Africa", "The Land of Gold"], 1],
+["Malawi", "Which of these is a district in Malawi’s Central Region?", ["Mulanje", "Karonga", "Dedza", "Chikwawa"], 2],
+["Malawi", "In which city is the National Assembly of Malawi located?", ["Zomba", "Blantyre", "Mzuzu", "Lilongwe"], 3],
+["Malawi", "What did William Kamkwamba build from scrap to bring electricity to his village?", ["A windmill", "A dam", "A solar panel", "A water tower"], 0],
+["Malawi", "Which country lies to the west of Malawi?", ["Mozambique", "Zambia", "Tanzania", "Zimbabwe"], 1],
+["Malawi", "Malawi has no coastline. What is such a country called?", ["An island nation", "A peninsula", "Landlocked", "An archipelago"], 2],
+["Malawi", "What is the sub-unit of the Malawian kwacha called?", ["Cent", "Pesewa", "Ngwee", "Tambala"], 3],
+["Malawi", "Who was Malawi’s president from 2004 until 2012?", ["Bingu wa Mutharika", "Bakili Muluzi", "Peter Mutharika", "Joyce Banda"], 0],
+["Malawi", "In which year did Malawi hold its first multiparty elections?", ["1990", "1992", "1994", "1999"], 2],
+["Malawi", "Which is the most populous city in Malawi?", ["Blantyre", "Mzuzu", "Lilongwe", "Zomba"], 2],
+["Malawi", "Which institution is Malawi’s central bank?", ["National Bank of Malawi", "Standard Bank", "FDH Bank", "Reserve Bank of Malawi"], 3],
+["Malawi", "Which leaf crop is Malawi’s main export?", ["Tobacco", "Tea", "Coffee", "Cotton"], 0],
+["Malawi", "Which of these is a major lakeshore town on Lake Malawi?", ["Dedza", "Salima", "Ntcheu", "Kasungu"], 1],
+["African History", "Who was the first president of independent Kenya?", ["Daniel arap Moi", "Mwai Kibaki", "Jomo Kenyatta", "Tom Mboya"], 2],
+["African History", "Which leader guided Ghana to independence in 1957?", ["Julius Nyerere", "Jomo Kenyatta", "Kenneth Kaunda", "Kwame Nkrumah"], 3],
+["African History", "Who was the first president of Tanzania?", ["Julius Nyerere", "Kenneth Kaunda", "Robert Mugabe", "Samora Machel"], 0],
+["African History", "What was Zimbabwe called under white minority rule?", ["Nyasaland", "Rhodesia", "Bechuanaland", "Tanganyika"], 1],
+["African History", "Who was the first president of Zambia?", ["Hastings Kamuzu Banda", "Frederick Chiluba", "Kenneth Kaunda", "Levy Mwanawasa"], 2],
+["African History", "Which Ethiopian emperor was overthrown in 1974?", ["Menelik II", "Tewodros II", "Yohannes IV", "Haile Selassie"], 3],
+["African History", "At which 1896 battle did Ethiopia defeat Italy?", ["Adwa", "Omdurman", "Isandlwana", "Khartoum"], 0],
+["African History", "The Berlin Conference of 1884–85 is linked to what?", ["The end of the slave trade", "The European partition of Africa", "African independence", "The founding of the African Union"], 1],
+["African History", "Which pharaoh is famous for the golden burial mask found in 1922?", ["Ramses II", "Khufu", "Tutankhamun", "Akhenaten"], 2],
+["African History", "Gao was the capital of which West African empire?", ["Mali Empire", "Ghana Empire", "Kanem Empire", "Songhai Empire"], 3],
+["African History", "Which king built the Zulu kingdom in the early 1800s?", ["Shaka", "Cetshwayo", "Dingane", "Mzilikazi"], 0],
+["African History", "Which of these countries resisted European colonisation for most of the colonial era?", ["Ghana", "Ethiopia", "Kenya", "Malawi"], 1],
+["African History", "The ancient Kingdom of Kush was located mainly in which modern country?", ["Angola", "Nigeria", "Sudan", "Namibia"], 2],
+["African History", "Who was Nigeria’s first president?", ["Olusegun Obasanjo", "Yakubu Gowon", "Muhammadu Buhari", "Nnamdi Azikiwe"], 3],
+["African History", "In which year did Nelson Mandela become president of South Africa?", ["1990", "1991", "1994", "1999"], 2],
+["African History", "On which island was Nelson Mandela imprisoned for 18 years?", ["Zanzibar", "Robben Island", "Gorée Island", "Mauritius"], 1],
+["African History", "Which island off Senegal was a major departure point in the slave trade?", ["Robben Island", "Zanzibar", "Gorée Island", "Bioko"], 2],
+["African History", "Which European country colonised Angola and Mozambique?", ["Spain", "Belgium", "Germany", "Portugal"], 3],
+["African History", "Which king personally ruled the Congo Free State?", ["Leopold II of Belgium", "Wilhelm II", "Edward VII", "Napoleon III"], 0],
+["African History", "Which African nation was founded by freed slaves from the USA and became independent in 1847?", ["Sierra Leone", "Liberia", "Ghana", "Gabon"], 1],
+["African History", "Sundiata Keita founded which empire?", ["Songhai Empire", "Ashanti Empire", "Mali Empire", "Zulu Kingdom"], 2],
+["African History", "Which year is known as the “Year of Africa” because many countries became independent?", ["1957", "1960", "1975", "1980"], 1],
+["African History", "Luxor stands on the site of which ancient Egyptian capital?", ["Thebes", "Memphis", "Alexandria", "Giza"], 0],
+["African History", "The African Union replaced which earlier organisation in 2002?", ["Arab League", "Organisation of African Unity", "Commonwealth of Nations", "Non-Aligned Movement"], 1],
+["African History", "Which South African anti-apartheid activist died in police custody in 1977?", ["Oliver Tambo", "Chris Hani", "Steve Biko", "Walter Sisulu"], 2],
+["Geography", "Which is the smallest country in the world by area?", ["Monaco", "San Marino", "Malta", "Vatican City"], 3],
+["Geography", "Which is the largest continent by area?", ["Asia", "Africa", "North America", "Europe"], 0],
+["Geography", "What is the capital of Canada?", ["Toronto", "Ottawa", "Vancouver", "Montreal"], 1],
+["Geography", "What is the capital of Egypt?", ["Alexandria", "Luxor", "Cairo", "Giza"], 2],
+["Geography", "Which city is the executive capital of South Africa?", ["Cape Town", "Johannesburg", "Durban", "Pretoria"], 3],
+["Geography", "What is the capital of Zambia?", ["Lusaka", "Ndola", "Kitwe", "Livingstone"], 0],
+["Geography", "What is the official capital of Tanzania?", ["Dar es Salaam", "Dodoma", "Arusha", "Mwanza"], 1],
+["Geography", "Which is the highest mountain in Africa?", ["Mount Kenya", "Mount Elgon", "Mount Kilimanjaro", "Sapitwa Peak"], 2],
+["Geography", "Which is the longest river in South America?", ["Orinoco", "Paraná", "Magdalena", "Amazon"], 3],
+["Geography", "Which is the largest lake in Africa by area?", ["Lake Victoria", "Lake Tanganyika", "Lake Malawi", "Lake Chad"], 0],
+["Geography", "Which is the deepest lake in the world?", ["Lake Tanganyika", "Lake Baikal", "Lake Superior", "Lake Victoria"], 1],
+["Geography", "Which river flows through London?", ["Seine", "Danube", "Thames", "Rhine"], 2],
+["Geography", "Which sea lies between Europe and North Africa?", ["Red Sea", "Black Sea", "Caspian Sea", "Mediterranean Sea"], 3],
+["Geography", "The Strait of Gibraltar connects the Mediterranean Sea to which ocean?", ["Atlantic Ocean", "Pacific Ocean", "Indian Ocean", "Arctic Ocean"], 0],
+["Geography", "As of the mid-2020s, which country has the largest population?", ["China", "India", "United States", "Indonesia"], 1],
+["Geography", "Which canal links the Mediterranean Sea to the Red Sea?", ["Panama Canal", "Kiel Canal", "Suez Canal", "Corinth Canal"], 2],
+["Geography", "Which canal joins the Atlantic and Pacific oceans?", ["Suez Canal", "Kiel Canal", "Erie Canal", "Panama Canal"], 3],
+["Geography", "Which is the largest island in the world?", ["Greenland", "Madagascar", "Borneo", "New Guinea"], 0],
+["Geography", "Which is the largest island in Africa?", ["Zanzibar", "Madagascar", "Mauritius", "Bioko"], 1],
+["Geography", "What is the capital of Brazil?", ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"], 2],
+["Geography", "In which country is the city of Casablanca?", ["Tunisia", "Algeria", "Egypt", "Morocco"], 3],
+["Geography", "Which is the coldest continent?", ["Antarctica", "Europe", "North America", "Asia"], 0],
+["Geography", "Which imaginary line divides Earth into the Northern and Southern Hemispheres?", ["The Prime Meridian", "The Equator", "Tropic of Cancer", "Tropic of Capricorn"], 1],
+["Geography", "Which line of longitude is 0°?", ["Equator", "International Date Line", "Prime Meridian", "Tropic of Cancer"], 2],
+["Geography", "Which is the largest country in Africa by area?", ["Democratic Republic of the Congo", "Sudan", "Libya", "Algeria"], 3],
+["Animals", "Which is the largest living bird?", ["Ostrich", "Emu", "Penguin", "Kiwi"], 0],
+["Animals", "How many legs does a spider have?", ["6", "8", "10", "12"], 1],
+["Animals", "How many legs does an insect have?", ["4", "6", "8", "10"], 1],
+["Animals", "Which animal is often called the “King of the Jungle”?", ["Tiger", "Elephant", "Leopard", "Lion"], 3],
+["Animals", "What is a baby cat called?", ["Kitten", "Cub", "Pup", "Calf"], 0],
+["Animals", "What is a baby sheep called?", ["Calf", "Lamb", "Kid", "Foal"], 1],
+["Animals", "What is a baby horse called?", ["Calf", "Cub", "Foal", "Lamb"], 2],
+["Animals", "Which animal gives us wool?", ["Pig", "Cow", "Horse", "Sheep"], 3],
+["Animals", "Which sea animal has eight arms?", ["Octopus", "Starfish", "Jellyfish", "Crab"], 0],
+["Animals", "Which bird is a symbol of peace?", ["Eagle", "Dove", "Owl", "Crow"], 1],
+["Animals", "What do koalas mainly eat?", ["Bamboo", "Grass", "Eucalyptus leaves", "Fish"], 2],
+["Animals", "How many hearts does an octopus have?", ["1", "2", "3", "4"], 2],
+["Animals", "Which is the largest of the big cats?", ["Tiger", "Lion", "Leopard", "Jaguar"], 0],
+["Animals", "Which intelligent marine mammal uses echolocation?", ["Shark", "Dolphin", "Seal", "Turtle"], 1],
+["Animals", "Which pink-feathered bird is known for standing on one leg?", ["Pelican", "Stork", "Flamingo", "Crane"], 2],
+["Animals", "Which of these mammals lays eggs?", ["Kangaroo", "Bat", "Dolphin", "Platypus"], 3],
+["Animals", "What is the largest living reptile?", ["Saltwater crocodile", "Komodo dragon", "Green iguana", "Black mamba"], 0],
+["Animals", "Which is the longest venomous snake?", ["Black mamba", "King cobra", "Puff adder", "Boomslang"], 1],
+["Animals", "Which animal builds dams across rivers?", ["Otter", "Duck", "Beaver", "Mole"], 2],
+["Animals", "Which insect starts life as a caterpillar?", ["Ant", "Cricket", "Dragonfly", "Butterfly"], 3],
+["Animals", "Which is the largest species of penguin?", ["Emperor penguin", "King penguin", "Adélie penguin", "Gentoo penguin"], 0],
+["Animals", "Which animal is famous for hibernating in winter?", ["Lion", "Bear", "Giraffe", "Elephant"], 1],
+["Animals", "What is a group of fish swimming together called?", ["A pack", "A herd", "A school", "A flock"], 2],
+["Animals", "What is a group of elephants called?", ["A pride", "A pack", "A flock", "A herd"], 3],
+["Animals", "Which bird is the fastest in a dive?", ["Peregrine falcon", "Golden eagle", "Ostrich", "Albatross"], 0],
+["Music", "How many keys does a standard piano have?", ["66", "76", "88", "96"], 2],
+["Music", "How many strings does a standard guitar have?", ["4", "5", "6", "8"], 2],
+["Music", "Which is the largest instrument in the violin family?", ["Violin", "Viola", "Cello", "Double bass"], 3],
+["Music", "Who sang “Waka Waka (This Time for Africa)”?", ["Shakira", "Beyoncé", "Rihanna", "Adele"], 0],
+["Music", "Freddie Mercury was the lead singer of which band?", ["The Beatles", "Queen", "Coldplay", "U2"], 1],
+["Music", "Which band recorded “Hey Jude”?", ["The Rolling Stones", "Queen", "The Beatles", "ABBA"], 2],
+["Music", "Which Swedish group sang “Dancing Queen”?", ["Roxette", "Europe", "Aqua", "ABBA"], 3],
+["Music", "Which Nigerian artist is nicknamed the “African Giant”?", ["Burna Boy", "Wizkid", "Davido", "Tiwa Savage"], 0],
+["Music", "Who is known as the “Queen of Soul”?", ["Whitney Houston", "Aretha Franklin", "Diana Ross", "Tina Turner"], 1],
+["Music", "Who sang “Halo” and “Single Ladies”?", ["Rihanna", "Adele", "Beyoncé", "Taylor Swift"], 2],
+["Music", "Which singer is known for the song “Shape of You”?", ["Justin Bieber", "Sam Smith", "Bruno Mars", "Ed Sheeran"], 3],
+["Music", "Which instrument is closely linked with Scotland?", ["Bagpipes", "Harp", "Accordion", "Banjo"], 0],
+["Music", "A group of four singers or musicians is called a…", ["Trio", "Quartet", "Quintet", "Duet"], 1],
+["Music", "What is singing without instrumental accompaniment called?", ["Staccato", "Crescendo", "A cappella", "Forte"], 2],
+["Music", "In music, what does “forte” mean?", ["Soft", "Fast", "Slow", "Loud"], 3],
+["Music", "In music, what does “tempo” refer to?", ["The speed of the music", "How loud it is", "The pitch of a note", "The number of singers"], 0],
+["Music", "Which South African group performed on Paul Simon’s album Graceland?", ["Mahotella Queens", "Ladysmith Black Mambazo", "Soweto Gospel Choir", "Savuka"], 1],
+["Music", "Which music style from the Congo is famed for sweeping guitar rhythms?", ["Highlife", "Mbalax", "Soukous", "Kwaito"], 2],
+["Music", "Kwaito is a music genre from which country?", ["Ghana", "Kenya", "Angola", "South Africa"], 3],
+["Music", "Mbalax is a popular music style from which country?", ["Senegal", "Mali", "Ghana", "Nigeria"], 0],
+["Music", "Amapiano originated in which country?", ["Nigeria", "South Africa", "Ghana", "Kenya"], 1],
+["Music", "Which plucked string instrument has a large triangular frame?", ["Banjo", "Cello", "Harp", "Violin"], 2],
+["Music", "Which of these is a percussion instrument?", ["Flute", "Trombone", "Viola", "Xylophone"], 3],
+["Music", "Which composer kept writing music after going almost completely deaf?", ["Ludwig van Beethoven", "Wolfgang Amadeus Mozart", "Johann Sebastian Bach", "Frédéric Chopin"], 0],
+["Music", "Who composed The Four Seasons?", ["Wolfgang Amadeus Mozart", "Antonio Vivaldi", "Johann Sebastian Bach", "George Frideric Handel"], 1],
+["Art and Culture", "Who painted the ceiling of the Sistine Chapel?", ["Raphael", "Leonardo da Vinci", "Michelangelo", "Donatello"], 2],
+["Art and Culture", "Which Spanish painter created Guernica?", ["Salvador Dalí", "Francisco Goya", "Diego Velázquez", "Pablo Picasso"], 3],
+["Art and Culture", "Which city is home to the Colosseum?", ["Rome", "Athens", "Cairo", "Istanbul"], 0],
+["Art and Culture", "Which Dutch painter is famous for his Sunflowers series?", ["Claude Monet", "Vincent van Gogh", "Rembrandt", "Johannes Vermeer"], 1],
+["Art and Culture", "Diwali, the festival of lights, is most associated with which country?", ["China", "Japan", "India", "Brazil"], 2],
+["Art and Culture", "Which Indian festival is celebrated by throwing coloured powder?", ["Diwali", "Easter", "Hanukkah", "Holi"], 3],
+["Art and Culture", "What is the Japanese art of flower arranging called?", ["Ikebana", "Origami", "Bonsai", "Haiku"], 0],
+["Art and Culture", "Which Japanese art involves growing miniature trees in pots?", ["Ikebana", "Bonsai", "Origami", "Sumi-e"], 1],
+["Art and Culture", "Which Italian city is famous for its masked Carnival?", ["Milan", "Naples", "Venice", "Florence"], 2],
+["Art and Culture", "Flamenco dance comes from which country?", ["Italy", "Portugal", "Argentina", "Spain"], 3],
+["Art and Culture", "Tango is most closely associated with which country?", ["Argentina", "Brazil", "Mexico", "Spain"], 0],
+["Art and Culture", "Samba is a dance style most strongly associated with which country?", ["Cuba", "Brazil", "Mexico", "Colombia"], 1],
+["Art and Culture", "What is the traditional Japanese garment called?", ["Sari", "Kaftan", "Kimono", "Hanbok"], 2],
+["Art and Culture", "The sari is a traditional garment of which region?", ["West Africa", "Scandinavia", "Central America", "South Asia"], 3],
+["Art and Culture", "What is the traditional Korean dress called?", ["Hanbok", "Kimono", "Cheongsam", "Sari"], 0],
+["Art and Culture", "Which South African people are famous for brightly painted house patterns?", ["Maasai", "Ndebele", "Hausa", "Ashanti"], 1],
+["Art and Culture", "Adinkra symbols come from which country?", ["Kenya", "Mali", "Ghana", "Zambia"], 2],
+["Art and Culture", "The adumu, or jumping dance, is performed by which people?", ["Zulu", "Hausa", "Chewa", "Maasai"], 3],
+["Art and Culture", "Which colourful wrap cloth with printed Swahili sayings is popular in East Africa?", ["Kanga", "Kente", "Bogolan", "Aso oke"], 0],
+["Art and Culture", "The Great Mosque of Djenné, built of mud-brick, is in which country?", ["Niger", "Mali", "Chad", "Senegal"], 1],
+["Art and Culture", "Who wrote the novel Things Fall Apart?", ["Wole Soyinka", "Ngũgĩ wa Thiong’o", "Chinua Achebe", "Chimamanda Ngozi Adichie"], 2],
+["Art and Culture", "Who became the first African to win the Nobel Prize in Literature in 1986?", ["Chinua Achebe", "Nadine Gordimer", "Naguib Mahfouz", "Wole Soyinka"], 3],
+["Art and Culture", "Which Italian artist painted The Last Supper?", ["Leonardo da Vinci", "Raphael", "Michelangelo", "Titian"], 0],
+["Art and Culture", "Nollywood is the film industry of which country?", ["Ghana", "Nigeria", "Kenya", "South Africa"], 1],
+["Art and Culture", "What is a mural?", ["A small carved statue", "A type of dance", "A large painting made directly on a wall", "A kind of woven fabric"], 2],
+["Sports", "What is the distance of a full marathon?", ["21 km", "42.195 km", "50 km", "100 km"], 1],
+["Sports", "How many players per side are on court in basketball?", ["4", "5", "6", "7"], 1],
+["Sports", "How many players per team are on the field in rugby union?", ["11", "13", "15", "18"], 2],
+["Sports", "In which sport is the Ryder Cup played?", ["Tennis", "Cricket", "Golf", "Rugby"], 2],
+["Sports", "In which sport might you score a “birdie”?", ["Tennis", "Bowling", "Baseball", "Golf"], 3],
+["Sports", "Which city hosted the 2016 Summer Olympics?", ["Rio de Janeiro", "Tokyo", "London", "Beijing"], 0],
+["Sports", "Which city hosted the 2024 Summer Olympics?", ["Los Angeles", "Paris", "Tokyo", "Rome"], 1],
+["Sports", "Which player has won the most Ballon d’Or awards?", ["Cristiano Ronaldo", "Pelé", "Lionel Messi", "Neymar"], 2],
+["Sports", "Which country won the 2018 men’s FIFA World Cup?", ["Croatia", "Brazil", "Germany", "France"], 3],
+["Sports", "Which country has won the most men’s FIFA World Cup titles?", ["Brazil", "Germany", "Italy", "Argentina"], 0],
+["Sports", "How many minutes does a standard football match last, excluding extra time?", ["60", "80", "90", "120"], 2],
+["Sports", "What is the highest possible score with three darts?", ["100", "150", "180", "200"], 2],
+["Sports", "Which sport features the Tour de France?", ["Running", "Swimming", "Motor racing", "Cycling"], 3],
+["Sports", "The Super Bowl is the championship game of which sport?", ["American football", "Baseball", "Basketball", "Ice hockey"], 0],
+["Sports", "Which martial art from Japan means “the gentle way”?", ["Karate", "Judo", "Taekwondo", "Kung fu"], 1],
+["Sports", "Taekwondo originated in which country?", ["Japan", "China", "South Korea", "Thailand"], 2],
+["Sports", "How many holes are in a full round of golf?", ["9", "12", "18", "24"], 2],
+["Sports", "Which male tennis player has won the most Grand Slam singles titles?", ["Novak Djokovic", "Roger Federer", "Rafael Nadal", "Pete Sampras"], 0],
+["Sports", "Which country has won the most Africa Cup of Nations titles?", ["Cameroon", "Egypt", "Ghana", "Nigeria"], 1],
+["Sports", "Which football club plays at Old Trafford?", ["Liverpool", "Arsenal", "Manchester United", "Chelsea"], 2],
+["Sports", "Which football club plays at Camp Nou?", ["Real Madrid", "Atlético Madrid", "Valencia", "FC Barcelona"], 3],
+["Sports", "In tennis, what is a score of zero called?", ["Love", "Nil", "Zero", "Blank"], 0],
+["Sports", "In cricket, what is it called when a batter is out without scoring?", ["Love", "A duck", "A nil", "A blank"], 1],
+["Sports", "Which swimming stroke is swum on your back?", ["Butterfly", "Breaststroke", "Backstroke", "Freestyle"], 2],
+["Sports", "Which sport is played with a puck?", ["Cricket", "Baseball", "Golf", "Ice hockey"], 3],
+["Science and Technology", "Which part of a cell contains most of its DNA?", ["Nucleus", "Membrane", "Cytoplasm", "Ribosome"], 0],
+["Science and Technology", "Which part of the cell is known as its powerhouse?", ["Nucleus", "Mitochondria", "Ribosome", "Chloroplast"], 1],
+["Science and Technology", "Which planet has the shortest year?", ["Venus", "Mars", "Mercury", "Earth"], 2],
+["Science and Technology", "What is the approximate speed of light?", ["3,000 km/s", "30,000 km/s", "300,000 km/s", "3,000,000 km/s"], 2],
+["Science and Technology", "What is the chemical symbol for sodium?", ["Na", "So", "S", "Sn"], 0],
+["Science and Technology", "What is the chemical symbol for iron?", ["Ir", "Fe", "I", "In"], 1],
+["Science and Technology", "Which gas is the most abundant in the Sun?", ["Helium", "Oxygen", "Hydrogen", "Nitrogen"], 2],
+["Science and Technology", "How many planets are in our solar system?", ["7", "8", "9", "10"], 1],
+["Science and Technology", "Who developed the theory of general relativity?", ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Stephen Hawking"], 0],
+["Science and Technology", "Who is credited with formulating the law of universal gravitation?", ["Galileo Galilei", "Isaac Newton", "Albert Einstein", "Charles Darwin"], 1],
+["Science and Technology", "Who proposed the theory of evolution by natural selection?", ["Gregor Mendel", "Louis Pasteur", "Charles Darwin", "Isaac Newton"], 2],
+["Science and Technology", "Who is credited with inventing the telephone?", ["Thomas Edison", "Nikola Tesla", "Guglielmo Marconi", "Alexander Graham Bell"], 3],
+["Science and Technology", "Who invented the World Wide Web?", ["Tim Berners-Lee", "Bill Gates", "Steve Jobs", "Mark Zuckerberg"], 0],
+["Science and Technology", "Android is an operating system developed by which company?", ["Apple", "Google", "Microsoft", "Nokia"], 1],
+["Science and Technology", "Which of these is a programming language?", ["Photoshop", "Bluetooth", "Python", "Windows"], 2],
+["Science and Technology", "What does HTML stand for?", ["Hyperlinks and Text Markup Language", "Home Tool Markup Language", "High Tech Modern Language", "HyperText Markup Language"], 3],
+["Science and Technology", "What does USB stand for?", ["Universal Serial Bus", "Universal Service Block", "United System Bridge", "Unified Signal Box"], 0],
+["Science and Technology", "What does RAM stand for in computing?", ["Read Access Memory", "Random Access Memory", "Rapid Action Module", "Run All Memory"], 1],
+["Science and Technology", "Which part of a plant mainly carries out photosynthesis?", ["Roots", "Stem", "Leaves", "Seeds"], 2],
+["Science and Technology", "Which organs filter blood and produce urine?", ["Liver", "Lungs", "Stomach", "Kidneys"], 3],
+["Science and Technology", "A lack of which vitamin causes scurvy?", ["Vitamin C", "Vitamin A", "Vitamin D", "Vitamin K"], 0],
+["Science and Technology", "What is the pH of pure water?", ["0", "5", "7", "14"], 2],
+["Science and Technology", "Which type of energy comes directly from the Sun?", ["Nuclear energy", "Wind energy", "Solar energy", "Geothermal energy"], 2],
+["Science and Technology", "Which blood type is known as the universal red-cell donor?", ["AB positive", "A positive", "B negative", "O negative"], 3],
+["Science and Technology", "How many chromosomes do humans normally have?", ["23", "44", "46", "48"], 2],
+["International", "Which country has a maple leaf on its flag?", ["Australia", "Canada", "Ireland", "Switzerland"], 1],
+["International", "In which country is the Eiffel Tower?", ["Italy", "Belgium", "France", "Spain"], 2],
+["International", "In which country is Mount Fuji?", ["China", "South Korea", "Thailand", "Japan"], 3],
+["International", "In which country are the Pyramids of Giza?", ["Egypt", "Sudan", "Mexico", "Peru"], 0],
+["International", "In which country is the Acropolis?", ["Italy", "Greece", "Turkey", "Cyprus"], 1],
+["International", "Which city is home to the Houses of Parliament and Big Ben?", ["Edinburgh", "Manchester", "London", "Cardiff"], 2],
+["International", "What is the capital of Germany?", ["Munich", "Hamburg", "Frankfurt", "Berlin"], 3],
+["International", "What is the capital of Italy?", ["Rome", "Milan", "Venice", "Naples"], 0],
+["International", "What is the capital of Spain?", ["Barcelona", "Madrid", "Seville", "Valencia"], 1],
+["International", "What is the capital of China?", ["Shanghai", "Hong Kong", "Beijing", "Guangzhou"], 2],
+["International", "What is the capital of India?", ["Mumbai", "Kolkata", "Chennai", "New Delhi"], 3],
+["International", "What is the capital of Russia?", ["Moscow", "Saint Petersburg", "Kyiv", "Minsk"], 0],
+["International", "What is the capital of Argentina?", ["Santiago", "Buenos Aires", "Lima", "Montevideo"], 1],
+["International", "What is the capital of Mexico?", ["Cancún", "Guadalajara", "Mexico City", "Monterrey"], 2],
+["International", "What is the currency of the United Kingdom?", ["Euro", "Dollar", "Franc", "Pound sterling"], 3],
+["International", "What is the currency of India?", ["Rupee", "Yen", "Dinar", "Taka"], 0],
+["International", "What is the currency of South Africa?", ["Kwacha", "Rand", "Pula", "Naira"], 1],
+["International", "How many member states does the African Union have?", ["44", "50", "55", "60"], 2],
+["International", "In which country is the International Olympic Committee headquartered?", ["France", "Greece", "Belgium", "Switzerland"], 3],
+["International", "What does NATO stand for?", ["North Atlantic Treaty Organization", "North American Trade Organization", "National Atlantic Trade Organisation", "Northern Alliance Treaty Office"], 0],
+["International", "Which UN agency focuses on children’s rights and welfare?", ["UNESCO", "UNICEF", "WHO", "FAO"], 1],
+["International", "Pizza originated in which country?", ["France", "Greece", "Italy", "Spain"], 2],
+["International", "Sushi is a traditional dish from which country?", ["China", "Thailand", "South Korea", "Japan"], 3],
+["International", "In which country is the Kremlin?", ["Russia", "Ukraine", "Poland", "Belarus"], 0],
+["International", "Which two countries share the world’s longest international land border?", ["Russia and China", "Canada and the United States", "Argentina and Chile", "India and Pakistan"], 1]
 ];
-const $=id=>document.getElementById(id),N=150,PER=15,STG=10,T=15;
+const $=id=>document.getElementById(id),T=15;
+let N=50,PER=10,STG=5;
 const CATS=Object.values(C);let myT=Date.now();
 let rm=null,order=[],r=0,score=0,left=T,tm=null,code="",name="",started=false,pending=0,locked=false,stg=[],hist=[],myBase=0,fBase=0,phase="q",wantRdy=0,miss=0,over=false,lastF=null,rt=null;
 function rng(s){let h=1779033703^s.length;for(let i=0;i<s.length;i++){h=Math.imul(h^s.charCodeAt(i),3432918353);h=h<<13|h>>>19}let a=h>>>0;return()=>{a+=0x6D2B79F5;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
-function pick(seed,mask,n){const f=rng(seed+mask.join("|")),a=Q.map((_,i)=>i).filter(i=>mask.includes(Q[i][0]));for(let i=a.length-1;i>0;i--){const j=Math.floor(f()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a.slice(0,n)}
 const Q0=Q.map(q=>[q[0],q[1],q[2].slice(),q[3]]);
 function shuffleOpts(seed){Q.forEach((q,i)=>{const o=Q0[i],a=o[2][o[3]],opts=o[2].slice();if(!opts.every(x=>/^[0-9]/.test(x))){const f=rng(seed+"|o"+i);for(let k=opts.length-1;k>0;k--){const j=Math.floor(f()*(k+1));[opts[k],opts[j]]=[opts[j],opts[k]]}}q[2]=opts;q[3]=opts.indexOf(a)})}
 let ac=null,muted=false;
@@ -233,7 +483,22 @@ function tone(f,t0,d,type,v,f2){
 function sGood(){[523.25,659.25,783.99,1046.5].forEach((f,i)=>tone(f,i*0.09,0.22,"triangle",0.28))}
 function sBad(){tone(220,0,0.25,"sawtooth",0.22,150);tone(165,0.22,0.35,"sawtooth",0.22,110)}
 function sTick(){tone(880,0,0.12,"square",0.12)}
-function build(seed,cats){let o=[];cats.forEach(c=>o.push(...pick(seed,[c],PER)));return o}
+const QL=Q.length;
+function enc(s){let o="";for(let i=0;i<QL;i+=4){let v=0;for(let k=0;k<4;k++)if(s.has(i+k))v|=8>>k;o+=v.toString(16)}return o}
+function dec(h){const s=new Set();String(h||"").split("").forEach((ch,j)=>{const v=parseInt(ch,16)||0;for(let k=0;k<4;k++)if((v&(8>>k))&&j*4+k<QL)s.add(j*4+k)});return s}
+let SB=new Set();try{SB=dec(localStorage.getItem("qc_seen"))}catch(e){}
+const mySn=enc(SB);
+function mark(i){if(SB.size>=QL)SB.clear();SB.add(i);try{localStorage.setItem("qc_seen",enc(SB))}catch(e){}}
+function plan(seed,seen,nc,per){
+ const f=rng(seed+"|plan"),sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(f()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+ const by={};CATS.forEach(c=>by[c]=[]);Q.forEach((q,i)=>by[q[0]].push(i));
+ if(seen.size>=QL)seen=new Set();
+ const un=c=>by[c].filter(i=>!seen.has(i)),cs=sh(CATS);
+ const ok=cs.filter(c=>un(c).length>=per),rest=cs.filter(c=>un(c).length<per).sort((a,b)=>un(b).length-un(a).length);
+ const cats=ok.concat(rest).slice(0,nc),order=[];
+ cats.forEach(c=>{const u=sh(un(c)),s=sh(by[c].filter(i=>seen.has(i)));order.push(...u.concat(s).slice(0,per))});
+ return{cats:cats,order:order};
+}
 const friend=()=>rm?rm.peers().find(p=>!p.isMe):null;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fname=f=>String(f.presence.name||"Friend").slice(0,16);
@@ -244,7 +509,7 @@ function board(){
  $("fr").textContent=f?fname(f)+" "+(f.presence.score||0):"Friend –";
  $("pg").style.width=(started?(r%PER)/PER*100:0)+"%";
 }
-function sync(extra){if(rm)rm.presence(Object.assign({name:name,score:score,t:myT},extra||{})).catch(()=>{})}
+function sync(extra){if(rm)rm.presence(Object.assign({name:name,score:score,t:myT,sn:mySn},extra||{})).catch(()=>{})}
 function fnote(){
  const el=$("fa");if(!el)return;const f=friend();
  if(!rm||!f||locked||phase!=="q"){el.style.display="none";return}
@@ -256,8 +521,8 @@ function fnote(){
  }else el.style.display="none";
 }
 function show(){
- const q=Q[order[r]];locked=false;left=T;
- $("qa").innerHTML='<div class="tm" id="tm" style="--p:100"><span id="tn">'+T+'</span></div><div class="fa" id="fa" style="display:none"></div><div class="qn">Stage '+(Math.floor(r/PER)+1)+' of '+STG+' · '+q[0]+' · Question '+(r%PER+1)+' of '+PER+'</div><div class="qt">'+q[1]+'</div><div id="ops"></div><div class="nx" id="st">Pick an answer</div>';
+ const q=Q[order[r]];mark(order[r]);locked=false;left=T;
+ $("qa").innerHTML='<div class="tm" id="tm" style="--p:100"><span id="tn">'+T+'</span></div><div class="fa" id="fa" style="display:none"></div><div class="qn">Category '+(Math.floor(r/PER)+1)+' of '+STG+' · '+q[0]+' · Question '+(r%PER+1)+' of '+PER+'</div><div class="qt">'+q[1]+'</div><div id="ops"></div><div class="nx" id="st">Pick an answer</div>';
  q[2].forEach((o,i)=>{const b=document.createElement("button");b.className="o";b.textContent="ABCD"[i]+". "+o;b.onclick=()=>choose(i);$("ops").appendChild(b)});
  clearInterval(tm);tm=setInterval(()=>{left--;if(left>0&&left<=3)sTick();$("tn").textContent=Math.max(left,0);$("tm").style.setProperty("--p",left/T*100);if(left<=0)choose(-1)},1000);
  board();fnote();
@@ -287,11 +552,11 @@ function stageDone(p){
  hist.push({c:stg[si],me:mine,fr:theirs,fn:fn,has:!!f});
  if(p>=N)return end();
  phase="res";
- const tie=mine===theirs,title=!f?"Stage "+(si+1)+" complete":tie?"Stage "+(si+1)+" is a tie!":mine>theirs?"You win Stage "+(si+1)+"! 🎉":esc(fn)+" wins Stage "+(si+1)+"!";
+ const tie=mine===theirs,title=!f?"Category "+(si+1)+" complete":tie?"Category "+(si+1)+" is a tie!":mine>theirs?"You win Category "+(si+1)+"! 🎉":esc(fn)+" wins Category "+(si+1)+"!";
  $("qa").innerHTML='<div class="qt" style="text-align:center">'+title+'</div><div class="qn" style="text-align:center">'+esc(stg[si])+'</div>'
-  +'<div class="lr"><span class="ln"><b>You</b><small>Stage: '+mine+' pts · Total: '+score+'</small></span></div>'
-  +(f?'<div class="lr"><span class="ln"><b>'+esc(fn)+'</b><small>Stage: '+theirs+' pts · Total: '+fs+'</small></span></div>':'')
-  +'<div class="nx" id="nxst" style="cursor:pointer">Start Stage '+(si+2)+': '+esc(stg[si+1])+' →</div>';
+  +'<div class="lr"><span class="ln"><b>You</b><small>Category: '+mine+' pts · Total: '+score+'</small></span></div>'
+  +(f?'<div class="lr"><span class="ln"><b>'+esc(fn)+'</b><small>Category: '+theirs+' pts · Total: '+fs+'</small></span></div>':'')
+  +'<div class="nx" id="nxst" style="cursor:pointer">Start Category '+(si+2)+': '+esc(stg[si+1])+' →</div>';
  $("nxst").onclick=()=>{if(wantRdy)return;wantRdy=si+1;sync({rdy:wantRdy});checkReady()};
  board();
 }
@@ -307,12 +572,12 @@ function forfeit(iWin,msg){
  if(over)return;over=true;clearInterval(tm);clearTimeout(rt);rt=null;pending=0;wantRdy=0;
  const f=friend(),fn=f?fname(f):(lastF?lastF.n:"Friend"),fs=f?(f.presence.score||0):(lastF?lastF.s:0);
  if(iWin)sGood();else sBad();
- const rows=hist.map((x,i)=>{const w=!x.has?"":x.me===x.fr?"Tie":x.me>x.fr?"You won":esc(x.fn)+" won";return '<div class="lr"><span class="ln"><b>Stage '+(i+1)+' · '+esc(x.c)+'</b><small>You '+x.me+(x.has?' · '+esc(x.fn)+' '+x.fr+' · '+w:'')+'</small></span></div>'}).join("");
+ const rows=hist.map((x,i)=>{const w=!x.has?"":x.me===x.fr?"Tie":x.me>x.fr?"You won":esc(x.fn)+" won";return '<div class="lr"><span class="ln"><b>Category '+(i+1)+' · '+esc(x.c)+'</b><small>You '+x.me+(x.has?' · '+esc(x.fn)+' '+x.fr+' · '+w:'')+'</small></span></div>'}).join("");
  $("qa").innerHTML='<div class="qt" style="text-align:center">'+(iWin?"You win! 🎉":"You lose")+'</div><div class="qn" style="text-align:center">'+esc(msg)+'</div>'
   +'<h3 style="margin-top:6px">Scores so far</h3>'
   +'<div class="lr"><span class="ln"><b>You</b><small>'+score+' points</small></span></div>'
   +'<div class="lr"><span class="ln"><b>'+esc(fn)+'</b><small>'+fs+' points</small></span></div>'
-  +(rows?'<h3 style="margin-top:12px">Stages played</h3>'+rows:'')
+  +(rows?'<h3 style="margin-top:12px">Categories played</h3>'+rows:'')
   +'<div class="nx" style="cursor:pointer" onclick="location.reload()">Play again</div>';
  board();
 }
@@ -322,15 +587,15 @@ function end(){
  rows.sort((a,b)=>b.s-a.s);
  const tie=rows.length>1&&rows[0].s===rows[1].s;
  const top=tie?"It’s a tie!":rows.length===1?"Nice game!":rows[0].me?"You win! 🎉":rows[0].n+" wins!";
- $("qa").innerHTML='<div class="qt" style="text-align:center">'+esc(top)+'</div><h3 style="margin-top:6px">Leaderboard</h3>'+rows.map((x,i)=>'<div class="lr"><span class="rk">'+(i+1)+'</span><span class="av sm">'+esc((x.n[0]||"?").toUpperCase())+'</span><span class="ln"><b>'+esc(x.n)+(x.me?" (you)":"")+'</b><small>'+x.s+' points</small></span>'+(i===0&&!tie?"<span>👑</span>":"")+'</div>').join("")+'<h3 style="margin-top:12px">Stages</h3>'+hist.map((x,i)=>{const w=!x.has?"":x.me===x.fr?"Tie":x.me>x.fr?"You won":esc(x.fn)+" won";return '<div class="lr"><span class="ln"><b>Stage '+(i+1)+' · '+esc(x.c)+'</b><small>You '+x.me+(x.has?' · '+esc(x.fn)+' '+x.fr+' · '+w:'')+'</small></span></div>'}).join("")+'<div class="nx" style="cursor:pointer" onclick="location.reload()">Play again</div>';
+ $("qa").innerHTML='<div class="qt" style="text-align:center">'+esc(top)+'</div><h3 style="margin-top:6px">Leaderboard</h3>'+rows.map((x,i)=>'<div class="lr"><span class="rk">'+(i+1)+'</span><span class="av sm">'+esc((x.n[0]||"?").toUpperCase())+'</span><span class="ln"><b>'+esc(x.n)+(x.me?" (you)":"")+'</b><small>'+x.s+' points</small></span>'+(i===0&&!tie?"<span>👑</span>":"")+'</div>').join("")+'<h3 style="margin-top:12px">Categories</h3>'+hist.map((x,i)=>{const w=!x.has?"":x.me===x.fr?"Tie":x.me>x.fr?"You won":esc(x.fn)+" won";return '<div class="lr"><span class="ln"><b>Category '+(i+1)+' · '+esc(x.c)+'</b><small>You '+x.me+(x.has?' · '+esc(x.fn)+' '+x.fr+' · '+w:'')+'</small></span></div>'}).join("")+'<div class="nx" style="cursor:pointer" onclick="location.reload()">Play again</div>';
  $("pg").style.width="100%";board();
 }
 function begin(){
  if(started)return;started=true;
- stg=CATS.slice();hist=[];myBase=0;fBase=0;phase="q";wantRdy=0;miss=0;over=false;lastF=null;clearTimeout(rt);rt=null;
- let sd=String(Date.now())+Math.random();
- if(rm){const f=friend();sd=code+"|"+Math.min(myT,f&&f.presence.t?f.presence.t:myT)}
- shuffleOpts(sd);order=build(sd,stg);r=0;score=0;sync({done:0,rdy:0,aq:0,ar:0,ms:0});show();
+ if(rm){N=50;PER=10;STG=5}else{N=2;PER=2;STG=1}hist=[];myBase=0;fBase=0;phase="q";wantRdy=0;miss=0;over=false;lastF=null;clearTimeout(rt);rt=null;
+ let sd=String(Date.now())+Math.random(),seen=dec(mySn);
+ if(rm){const f=friend();sd=code+"|"+Math.min(myT,f&&f.presence.t?f.presence.t:myT);if(f&&f.presence.sn)dec(f.presence.sn).forEach(i=>seen.add(i))}
+ shuffleOpts(sd);{const pl=plan(sd,seen,STG,PER);stg=pl.cats;order=pl.order}r=0;score=0;sync({done:0,rdy:0,aq:0,ar:0,ms:0});show();
 }
 function joinRoom(code,mode){
  return new Promise((res,rej)=>{
@@ -388,8 +653,8 @@ async function start(mode){
 }
 $("nm").oninput=e=>{const v=e.target.value.trim();$("av").textContent=(v[0]||"Q").toUpperCase();$("hi").textContent=v?"Hi, "+v:"Quiz Challenge"};
 function drawCats(){
- $("cats").innerHTML=CATS.map((c,i)=>'<button class="cc on" style="pointer-events:none">'+(i+1)+'. '+c+'</button>').join("");
- $("cs").textContent=STG+" stages · 15 questions each";
+ $("cats").innerHTML=CATS.map((c,i)=>'<button class="cc on" style="pointer-events:none">'+c+'</button>').join("");
+ $("cs").textContent=CATS.length+" categories · "+(Q.length/CATS.length)+" questions each";
 }
 $("catb").onclick=()=>$("cw").classList.toggle("hide");
 drawCats();
