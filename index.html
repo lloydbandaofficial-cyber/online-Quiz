@@ -2,42 +2,45 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Quiz Challenge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--pu:#5b50d6;--pu2:#7a70e8;--bg:#5b50d6;--sheet:#fff;--fg:#1b1a2e;--mut:#7a7890;--bd:#e4e2f3;--ink:#12112a;--bad:#e5484d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2f2a82;--sheet:#1c1b33;--fg:#f1f0fb;--mut:#a5a3c4;--bd:#34325a;--ink:#0d0c20;--pu:#7468f0}}
-:root[data-theme="dark"]{--bg:#2f2a82;--sheet:#1c1b33;--fg:#f1f0fb;--mut:#a5a3c4;--bd:#34325a;--ink:#0d0c20;--pu:#7468f0}
+@font-face{font-family:"Overused Grotesk";font-style:normal;font-weight:300 900;font-display:swap;src:url("https://cdn.jsdelivr.net/gh/RandomMaerks/Overused-Grotesk@master/fonts/variable/OverusedGroteskRoman-VF.ttf") format("truetype"),url("https://raw.githubusercontent.com/RandomMaerks/Overused-Grotesk/master/fonts/variable/OverusedGroteskRoman-VF.ttf") format("truetype")}
+</style>
+<style>
+:root{--g:#041e0b;--l:#d6f378;--pu:#041e0b;--pu2:#0d3a1a;--bg:#041e0b;--sheet:#d6f378;--fg:#041e0b;--mut:rgba(4,30,11,.62);--bd:rgba(4,30,11,.22);--ink:#041e0b;--bad:#e5484d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}html{background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:#fff;font:16px/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif}
+body{margin:0;background:var(--bg);color:var(--l);font:16px/1.4 "Overused Grotesk",Inter,"Helvetica Neue",Arial,sans-serif}
 main{max-width:430px;margin:0 auto}.hide{display:none}
 .top{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 10px}
 .top small{opacity:.8;font-size:12px;letter-spacing:.06em}.top h1{margin:2px 0 0;font-size:22px}
-.av{width:44px;height:44px;border-radius:50%;background:#463cc0;color:#fff;display:grid;place-items:center;font-weight:700}
-.av.sm{width:38px;height:38px;background:var(--pu)}
+.av{width:44px;height:44px;border-radius:50%;background:var(--l);color:var(--g);display:grid;place-items:center;font-weight:700}
+.av.sm{width:38px;height:38px;background:var(--pu);color:var(--l)}
 .sheet{background:var(--sheet);color:var(--fg);border-radius:28px 28px 0 0;padding:20px;margin-top:12px;min-height:68vh}
-.feat{background:linear-gradient(160deg,var(--pu2),var(--pu));color:#fff;border-radius:22px;padding:18px}
+.feat{background:linear-gradient(160deg,var(--pu2),var(--pu));color:var(--l);border-radius:22px;padding:18px}
 .feat small{opacity:.85;letter-spacing:.06em}.feat h2{margin:6px 0;font-size:19px}.feat p{margin:0 0 8px;opacity:.9}
-.feat input{width:100%;padding:12px;border-radius:12px;border:0;margin:5px 0;font:inherit;color:#1b1a2e;background:#fff}
-.pill{width:100%;background:#fff;color:#463cc0;border:0;border-radius:999px;padding:13px;font:inherit;font-weight:700;margin-top:8px;cursor:pointer}
+.feat input{width:100%;padding:12px;border-radius:12px;border:0;margin:5px 0;font:inherit;color:var(--g);background:var(--l)}
+.pill{width:100%;background:var(--l);color:var(--g);border:0;border-radius:999px;padding:13px;font:inherit;font-weight:700;margin-top:8px;cursor:pointer}
 h3{margin:22px 0 4px;font-size:18px}
 .li{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--bd);border-radius:14px;margin:10px 0;width:100%;background:none;color:var(--fg);font:inherit;text-align:left}
-button.li{cursor:pointer}.li small{display:block;color:var(--mut)}.ic{width:40px;height:40px;border-radius:10px;background:var(--pu);color:#fff;display:grid;place-items:center}
+button.li{cursor:pointer}.li small{display:block;color:var(--mut)}.ic{width:40px;height:40px;border-radius:10px;background:var(--pu);color:var(--l);display:grid;place-items:center}
 .top2{display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
-.back{background:none;border:0;color:#fff;font-size:24px;width:32px;cursor:pointer}
+.back{background:none;border:0;color:var(--l);font-size:24px;width:32px;cursor:pointer}
 .chips{display:flex;align-items:center;gap:10px;padding:0 16px}
-.chip{background:rgba(255,255,255,.18);border-radius:10px;padding:6px 10px;font-size:14px;white-space:nowrap}
-.pbar{flex:1;height:6px;background:rgba(255,255,255,.25);border-radius:3px;overflow:hidden}.pbar i{display:block;height:100%;width:0;background:#fff;transition:width .4s}
+.chip{background:rgba(214,243,120,.18);border-radius:10px;padding:6px 10px;font-size:14px;white-space:nowrap}
+.pbar{flex:1;height:6px;background:rgba(214,243,120,.25);border-radius:3px;overflow:hidden}.pbar i{display:block;height:100%;width:0;background:var(--l);transition:width .4s}
 .tm{width:60px;height:60px;border-radius:50%;background:conic-gradient(var(--pu) calc(var(--p)*1%),var(--bd) 0);display:grid;place-items:center;margin:0 auto}
 .tm span{width:48px;height:48px;border-radius:50%;background:var(--sheet);display:grid;place-items:center;font-weight:700;color:var(--pu);font-size:18px}
 .qn{color:var(--mut);font-size:12px;letter-spacing:.05em;text-transform:uppercase;margin:18px 0 6px}
 .qt{font-size:19px;font-weight:700;margin-bottom:12px}
 .o{display:block;width:100%;text-align:left;padding:15px 16px;margin:10px 0;border:1px solid var(--bd);border-radius:12px;background:var(--sheet);color:var(--fg);font:inherit;cursor:pointer}
-.o.ok{background:var(--pu);color:#fff;border-color:var(--pu)}.o.no{background:var(--bad);color:#fff;border-color:var(--bad)}
-.nx{background:var(--ink);color:#fff;border-radius:14px;padding:16px;text-align:center;font-weight:600;margin-top:18px}
+.o.ok{background:var(--pu);color:var(--l);border-color:var(--pu)}.o.no{background:var(--bad);color:#fff;border-color:var(--bad)}
+.nx{background:var(--ink);color:var(--l);border-radius:14px;padding:16px;text-align:center;font-weight:600;margin-top:18px}
 .wait{text-align:center;padding-top:30px}.wait p{color:var(--mut)}.code{font-size:34px;font-weight:800;letter-spacing:.15em;color:var(--pu)}
-.lr{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:rgba(122,112,232,.12);margin:10px 0}
+.lr{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:rgba(4,30,11,.1);margin:10px 0}
 .ln{flex:1}.ln small{display:block;color:var(--mut)}.rk{width:22px;color:var(--mut);font-weight:700}
-.cg{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 8px}.cc{border:1px solid var(--bd);background:none;color:var(--fg);border-radius:999px;padding:8px 14px;font:inherit;cursor:pointer}.cc.on{background:var(--pu);color:#fff;border-color:var(--pu)}#cw small{color:var(--mut)}
-*,button,input{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}.fa{margin:8px 0;padding:9px 12px;border-radius:12px;font-weight:700;text-align:center;font-size:14px}.fa.ok{background:#e0f7e9;color:#14683a}.fa.no{background:#fde6e6;color:#a12a2a}.fa.to{background:#fff3d6;color:#8a5a00}</style></head><body><main>
+.cg{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 8px}.cc{border:1px solid var(--bd);background:none;color:var(--fg);border-radius:999px;padding:8px 14px;font:inherit;cursor:pointer}.cc.on{background:var(--pu);color:var(--l);border-color:var(--pu)}#cw small{color:var(--mut)}
+*,button,input{font-family:"Overused Grotesk",Inter,"Helvetica Neue",Arial,sans-serif}.fa{margin:8px 0;padding:9px 12px;border-radius:12px;font-weight:700;text-align:center;font-size:14px}.fa.ok{background:var(--g);color:var(--l)}.fa.no{background:#fde6e6;color:#a12a2a}.fa.to{background:#fff3d6;color:#8a5a00}</style></head><body><main>
 <section id="home">
  <header class="top"><div><small>WELCOME</small><h1 id="hi">Quiz Challenge</h1></div><div class="av" id="av">Q</div></header>
  <div class="sheet">
@@ -46,7 +49,7 @@ button.li{cursor:pointer}.li small{display:block;color:var(--mut)}.ic{width:40px
    <button class="pill" id="create">Create room</button>
    <div style="text-align:center;opacity:.85;margin:10px 0 2px;font-size:13px">or join a friend's room</div>
    <input id="cd" placeholder="Enter room code" maxlength="12" autocapitalize="characters">
-   <button class="pill" id="join" style="background:transparent;color:#fff;border:2px solid #fff">Join room</button>
+   <button class="pill" id="join" style="background:transparent;color:var(--l);border:2px solid var(--l)">Join room</button>
    <div id="err" style="margin-top:8px;font-size:13px;min-height:16px;color:#ffd6d6"></div></div>
   <h3>Quizzes</h3>
   <button class="li" id="solo"><span class="ic">▶</span><span><b>Practice alone</b><small>1 random category, 2 questions</small></span></button>
